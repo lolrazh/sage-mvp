@@ -62,76 +62,52 @@ export default function OnboardingAspirations() {
       title="what's most important to you right now?"
       subtitle="select all that resonate with your current journey"
     >
-      <div className="space-y-10">
+      <div className="flex-1 flex flex-col justify-between">
         {/* Aspiration cards */}
-        <div className="grid grid-cols-1 gap-4">
-          {aspirations.map(({ id, label, description, icon: Icon, gradient }) => {
+        <div className="grid grid-cols-1 gap-3">
+          {aspirations.map(({ id, label, description, icon: Icon }) => {
             const isSelected = selectedAspirations.includes(id);
             return (
-              <motion.button
+              <Button
                 key={id}
                 onClick={() => handleSelect(id)}
-                className={`
-                  relative p-6 rounded-xl text-left transition-all
-                  ${isSelected 
-                    ? "bg-foreground text-background ring-2 ring-foreground" 
-                    : `bg-gradient-to-br ${gradient} hover:ring-1 hover:ring-foreground/10`}
-                `}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                variant={isSelected ? "selected" : "outline"}
+                className="flex items-start gap-4 h-auto p-4 text-left"
               >
-                <div className="relative z-10 flex items-start gap-4">
-                  <div className={`
-                    p-2 rounded-lg 
-                    ${isSelected 
-                      ? "bg-background/10" 
-                      : "bg-foreground/5"}
-                  `}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-base font-medium">{label}</div>
-                    <div className={`text-sm ${
-                      isSelected 
-                        ? "text-background/70" 
-                        : "text-muted-foreground"
-                    }`}>
-                      {description}
-                    </div>
+                <div className={`
+                  p-2 rounded-lg 
+                  ${isSelected 
+                    ? "bg-background/10" 
+                    : "bg-foreground/5"}
+                `}>
+                  <Icon className="w-4 h-4" />
+                </div>
+                <div className="space-y-1">
+                  <div className="text-sm font-medium">{label}</div>
+                  <div className={`text-xs ${
+                    isSelected 
+                      ? "text-background/70" 
+                      : "text-muted-foreground"
+                  }`}>
+                    {description}
                   </div>
                 </div>
-
-                {/* Selection indicator */}
-                {isSelected && (
-                  <motion.div
-                    layoutId={`aspiration-selection-${id}`}
-                    className="absolute inset-0 rounded-xl bg-foreground -z-10"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                )}
-              </motion.button>
+              </Button>
             );
           })}
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-center gap-6 pt-4">
+        <div className="flex justify-center gap-4 pt-6">
           <Button 
             asChild 
             variant="ghost" 
-            size="lg" 
-            className="w-32 transition-opacity hover:opacity-70"
+            size="sm"
           >
             <Link href="/onboarding/4">back</Link>
           </Button>
           <Button 
-            size="lg" 
-            className="w-32 transition-all duration-300"
+            size="sm"
             disabled={selectedAspirations.length === 0}
             onClick={handleNext}
           >

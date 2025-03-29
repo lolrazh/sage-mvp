@@ -1,75 +1,41 @@
-import { motion } from "framer-motion";
-import { useOnboardingStore } from "@/lib/store";
-import { PageContainer } from "./PageContainer";
+"use client";
 
-const STEPS = ["name", "culture", "mood", "environment", "aspirations", "perception", "reflection"];
+import { Progress } from "@/components/ui/progress";
 
 interface OnboardingLayoutProps {
   children: React.ReactNode;
   step: number;
   title: string;
-  subtitle?: string;
+  subtitle: string;
 }
 
-export function OnboardingLayout({ 
-  children, 
+const TOTAL_STEPS = 6;
+
+export function OnboardingLayout({
+  children,
   step,
   title,
-  subtitle 
+  subtitle,
 }: OnboardingLayoutProps) {
-  const progress = ((step) / (STEPS.length)) * 100;
-
   return (
-    <PageContainer className="bg-gradient-to-b from-background via-background to-muted/20">
-      {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-muted/20">
-        <motion.div 
-          className="h-full bg-foreground/30 origin-left"
-          initial={{ scaleX: 0 }}
-          animate={{ 
-            scaleX: progress / 100,
-            transition: { duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }
-          }}
-        />
+    <main className="flex min-h-screen flex-col items-center justify-center p-6">
+      <div className="w-full max-w-md mx-auto h-[70vh] flex flex-col">
+        {/* Progress */}
+        <div className="mb-16">
+          <Progress value={(step / TOTAL_STEPS) * 100} className="h-[1px] bg-[#1C1B1F]/10" />
+        </div>
+
+        {/* Header */}
+        <div className="space-y-1 mb-12 text-center">
+          <h1 className="text-[28px] font-serif tracking-[-0.03em]">{title}</h1>
+          <p className="text-sm text-[#1C1B1F]/60">{subtitle}</p>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
       </div>
-
-      {/* Step indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="absolute top-8 left-0 right-0 text-center"
-      >
-        <span className="text-sm text-muted-foreground">
-          step {step} of {STEPS.length} – {STEPS[step - 1]}
-        </span>
-      </motion.div>
-
-      {/* Main content */}
-      <div className="flex flex-col items-center justify-center min-h-[85vh] max-w-md mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.4, 0.0, 0.2, 1] }}
-          className="w-full space-y-16"
-        >
-          {/* Header */}
-          <div className="space-y-3 text-center">
-            <h1 className="text-4xl sm:text-5xl font-serif tracking-tight">
-              {title}
-            </h1>
-            {subtitle && (
-              <p className="text-muted-foreground/70 text-lg leading-relaxed">
-                {subtitle}
-              </p>
-            )}
-          </div>
-
-          {/* Content */}
-          <div className="space-y-12">
-            {children}
-          </div>
-        </motion.div>
-      </div>
-    </PageContainer>
+    </main>
   );
 } 

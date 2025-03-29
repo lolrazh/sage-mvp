@@ -1,17 +1,19 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { AnimatedInput } from "@/components/ui/AnimatedInput";
 import { OnboardingLayout } from "@/components/layout/OnboardingLayout";
 import { useOnboardingStore } from "@/lib/store";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export default function OnboardingName() {
   const router = useRouter();
   const { stepData, setStepData, completeStep } = useOnboardingStore();
+  const [name, setName] = useState(stepData.name || "");
 
   const handleNext = () => {
+    setStepData("name", name);
     completeStep("name");
     router.push("/onboarding/2");
   };
@@ -22,32 +24,33 @@ export default function OnboardingName() {
       title="what can i call you?"
       subtitle="this is the start of something meaningful"
     >
-      {/* Input */}
-      <div className="space-y-10">
-        <AnimatedInput
-          type="text"
-          value={stepData.name}
-          onChange={(e) => setStepData("name", e.target.value)}
-          placeholder="your name"
-          className="text-center text-2xl py-8 tracking-wide"
-          autoFocus
-        />
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col items-center justify-center -mt-12">
+          <div className="w-full max-w-[280px]">
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="bg-transparent border-b border-t-0 border-x-0 rounded-none px-0 h-12 text-base focus-visible:ring-0 placeholder:text-foreground/30 text-center"
+              placeholder="type your name"
+              autoFocus
+            />
+          </div>
+        </div>
 
-        {/* Navigation */}
-        <div className="flex justify-center gap-6">
+        <div className="flex justify-center gap-3 mb-6">
           <Button 
-            asChild 
             variant="ghost" 
-            size="lg" 
-            className="w-32 transition-opacity hover:opacity-70"
+            size="sm"
+            onClick={() => router.push("/")}
+            className="text-xs font-normal"
           >
-            <Link href="/">back</Link>
+            back
           </Button>
           <Button 
-            size="lg" 
-            className="w-32 transition-all duration-300"
-            disabled={!stepData.name.trim()}
+            size="sm"
+            disabled={!name.trim()}
             onClick={handleNext}
+            className="text-xs font-normal bg-[#1C1B1F] text-white hover:opacity-90"
           >
             next
           </Button>

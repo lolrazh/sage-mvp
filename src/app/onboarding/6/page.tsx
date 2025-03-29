@@ -38,53 +38,47 @@ export default function OnboardingFirstEntry() {
       title="let's write your first entry"
       subtitle="start your journey with a simple reflection"
     >
-      <div className="space-y-10">
-        <div className="space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+      <div className="flex-1 flex flex-col justify-between">
+        <div className="space-y-4">
+          <motion.p
+            key={currentPrompt}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative"
+            exit={{ opacity: 0, y: -10 }}
+            className="text-muted-foreground text-sm cursor-pointer"
+            onClick={cyclePrompt}
           >
-            <motion.p
-              key={currentPrompt}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-muted-foreground mb-3 cursor-pointer"
-              onClick={cyclePrompt}
-            >
-              {prompts[currentPrompt]}
-            </motion.p>
+            {prompts[currentPrompt]}
+          </motion.p>
+          <div className="relative">
             <Textarea
               value={entry}
               onChange={(e) => setEntry(e.target.value)}
               placeholder="type anything that comes to mind..."
-              className="min-h-[200px] resize-none bg-gradient-to-b from-background to-muted/20 border-none focus-visible:ring-1 focus-visible:ring-foreground/20 transition-all"
+              className="min-h-[200px] resize-none bg-background/50 backdrop-blur-sm border-foreground/10 focus-visible:ring-1 focus-visible:ring-foreground/20 transition-all rounded-lg"
               autoFocus
             />
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: entry.length > 0 ? 1 : 0 }}
-              className="absolute bottom-4 right-4 text-sm text-muted-foreground"
+              className="absolute bottom-3 right-3 text-xs text-muted-foreground"
             >
               {entry.length} characters
             </motion.div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-center gap-6 pt-4">
+        <div className="flex justify-center gap-4 pt-6">
           <Button 
             asChild 
             variant="ghost" 
-            size="lg" 
-            className="w-32 transition-opacity hover:opacity-70"
+            size="sm"
           >
             <Link href="/onboarding/5">back</Link>
           </Button>
           <Button 
-            size="lg" 
-            className="w-32 transition-all duration-300"
+            size="sm"
             disabled={!entry.trim()}
             onClick={handleNext}
           >
