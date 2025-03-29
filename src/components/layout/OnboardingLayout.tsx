@@ -22,7 +22,7 @@ export function OnboardingLayout({
       {/* Fixed progress bar */}
       <div className="fixed top-24 left-0 right-0 px-6">
         <div className="max-w-md mx-auto">
-          <Progress value={(step / TOTAL_STEPS) * 100} className="h-[2px] bg-[#333333]/10" />
+          <Progress value={(step / TOTAL_STEPS) * 100} className="h-1 bg-[#333333]/10" />
         </div>
       </div>
 
