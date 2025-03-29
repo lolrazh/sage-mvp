@@ -15,11 +15,11 @@ export default function OnboardingName() {
             placeholder="your name"
             className="text-center lowercase"
           />
-          <div className="flex justify-between w-full">
-            <Button asChild variant="ghost" size="lg" className="lowercase">
+          <div className="flex justify-center gap-4 w-full">
+            <Button asChild variant="ghost" size="lg" className="lowercase w-32">
               <Link href="/">back</Link>
             </Button>
-            <Button asChild size="lg" className="lowercase">
+            <Button asChild size="lg" className="lowercase w-32">
               <Link href="/onboarding/2">next</Link>
             </Button>
           </div>
