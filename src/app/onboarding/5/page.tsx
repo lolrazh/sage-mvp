@@ -75,6 +75,7 @@ export default function OnboardingAspirations() {
                   relative p-4 rounded-full text-left transition-all ${color}
                   ${isSelected ? "border border-[#333333]/50" : ""}
                   transform hover:scale-[1.02] active:scale-[0.98]
+                  cursor-pointer
                 `}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

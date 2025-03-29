@@ -85,7 +85,7 @@ const CountryDropdownComponent = (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         ref={ref}
-        className="w-full max-w-[280px] mx-auto bg-transparent border border-[#333333]/50 rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase"
+        className="w-full max-w-[280px] mx-auto bg-transparent border border-[#333333]/50 rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase cursor-pointer"
         disabled={disabled}
         {...props}
       >
