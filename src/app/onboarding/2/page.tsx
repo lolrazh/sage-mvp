@@ -3,28 +3,46 @@
 import { OnboardingLayout } from "@/components/layout/OnboardingLayout";
 import { useOnboardingStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const cultures = [
-  { id: "american", label: "american" },
-  { id: "indian", label: "indian" },
-  { id: "european", label: "european" },
-  { id: "east_asian", label: "east asian" },
-  { id: "african", label: "african" },
-  { id: "latin", label: "latin american" },
-  { id: "middle_eastern", label: "middle eastern" },
-  { id: "pacific", label: "pacific islander" },
-  { id: "other", label: "other" },
+const countries = [
+  { value: "us", label: "United States" },
+  { value: "in", label: "India" },
+  { value: "cn", label: "China" },
+  { value: "jp", label: "Japan" },
+  { value: "kr", label: "South Korea" },
+  { value: "gb", label: "United Kingdom" },
+  { value: "de", label: "Germany" },
+  { value: "fr", label: "France" },
+  { value: "it", label: "Italy" },
+  { value: "es", label: "Spain" },
+  { value: "br", label: "Brazil" },
+  { value: "mx", label: "Mexico" },
+  { value: "au", label: "Australia" },
+  { value: "ca", label: "Canada" },
+  { value: "ru", label: "Russia" },
+  { value: "za", label: "South Africa" },
+  { value: "ng", label: "Nigeria" },
+  { value: "eg", label: "Egypt" },
+  { value: "sa", label: "Saudi Arabia" },
+  { value: "ae", label: "United Arab Emirates" },
+  { value: "other", label: "Other" },
 ];
 
 export default function OnboardingCulture() {
   const router = useRouter();
   const { stepData, setStepData, completeStep } = useOnboardingStore();
 
-  const handleSelect = (id: string) => {
-    setStepData("culture", id);
+  const handleSelect = (value: string) => {
+    setStepData("culture", value);
   };
 
   const handleNext = () => {
@@ -35,36 +53,23 @@ export default function OnboardingCulture() {
   return (
     <OnboardingLayout
       step={2}
-      title="which culture do you identify with?"
+      title="which country are you from?"
       subtitle="this helps me understand your perspective better"
     >
       <div className="space-y-10">
-        {/* Culture grid */}
-        <div className="grid grid-cols-2 gap-3">
-          {cultures.map(({ id, label }) => (
-            <motion.button
-              key={id}
-              onClick={() => handleSelect(id)}
-              className={`
-                relative p-6 rounded-lg text-left transition-colors
-                ${stepData.culture === id 
-                  ? "bg-foreground text-background" 
-                  : "bg-muted/50 hover:bg-muted"}
-              `}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {/* Selection indicator */}
-              {stepData.culture === id && (
-                <motion.div
-                  layoutId="culture-selection"
-                  className="absolute inset-0 rounded-lg bg-foreground -z-10"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              <span className="relative z-10 text-base">{label}</span>
-            </motion.button>
-          ))}
+        <div className="w-full max-w-md mx-auto">
+          <Select onValueChange={handleSelect} value={stepData.culture}>
+            <SelectTrigger className="w-full h-14 text-lg">
+              <SelectValue placeholder="Select your country" />
+            </SelectTrigger>
+            <SelectContent>
+              {countries.map(({ value, label }) => (
+                <SelectItem key={value} value={value} className="text-base">
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Navigation */}

@@ -32,7 +32,7 @@ export function OnboardingLayout({
           <div className="space-y-8">
             {/* Header */}
             <div className="text-center space-y-1">
-              <h1 className="text-[32px] font-serif font-medium tracking-[-0.03em]">{title}</h1>
+              <h1 className="text-[40px] font-serif font-medium tracking-[-0.03em] leading-tight">{title}</h1>
               <p className="text-sm text-[#333333]/80">{subtitle}</p>
             </div>
 
