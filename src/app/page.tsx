@@ -6,7 +6,7 @@ export default function LandingPage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-muted via-background to-muted p-24">
       <div className="flex flex-col items-center space-y-8 text-center">
         {/* Simple text logo for now, can be replaced with an SVG later */}
-        <h1 className="text-5xl font-serif lowercase tracking-tight text-foreground">
+        <h1 className="text-5xl font-serif font-medium lowercase tracking-tight text-foreground">
           sage
         </h1>
         <p className="text-muted-foreground max-w-sm">

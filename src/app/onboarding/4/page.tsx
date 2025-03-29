@@ -14,28 +14,28 @@ const environments = [
     label: "cozy evening alone",
     description: "quiet reflection, soft lighting, peaceful solitude",
     icon: Moon,
-    gradient: "from-indigo-500/5 to-purple-500/5"
+    color: "bg-indigo-500/10"
   },
   {
     id: "social",
     label: "lively gathering with friends",
     description: "shared laughter, warm connections, social energy",
     icon: Users,
-    gradient: "from-orange-500/5 to-pink-500/5"
+    color: "bg-orange-500/10"
   },
   {
     id: "exploring",
     label: "exploring something new alone",
     description: "curiosity-driven, independent discovery, learning",
     icon: Compass,
-    gradient: "from-cyan-500/5 to-blue-500/5"
+    color: "bg-cyan-500/10"
   },
   {
     id: "nature",
     label: "being in nature",
     description: "natural rhythms, open spaces, grounding presence",
     icon: Trees,
-    gradient: "from-green-500/5 to-emerald-500/5"
+    color: "bg-green-500/10"
   }
 ];
 
@@ -60,49 +60,30 @@ export default function OnboardingEnvironment() {
     >
       <div className="space-y-10">
         {/* Environment cards */}
-        <div className="grid grid-cols-1 gap-4">
-          {environments.map(({ id, label, description, icon: Icon, gradient }) => (
+        <div className="grid grid-cols-1 gap-3">
+          {environments.map(({ id, label, description, icon: Icon, color }) => (
             <motion.button
               key={id}
               onClick={() => handleSelect(id)}
               className={`
-                relative p-6 rounded-xl text-left transition-all
+                relative p-4 rounded-full text-left transition-all ${color}
                 ${stepData.environment === id 
-                  ? "bg-foreground text-background" 
-                  : `bg-gradient-to-br ${gradient} hover:ring-1 hover:ring-foreground/10`}
+                  ? "border border-[#333333]/50" 
+                  : "hover:scale-105"}
               `}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{
+                y: { type: "spring", stiffness: 300, damping: 20 }
+              }}
             >
-              {/* Selection indicator */}
-              {stepData.environment === id && (
-                <motion.div
-                  layoutId="environment-selection"
-                  className="absolute inset-0 rounded-xl bg-foreground -z-10"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              
-              <div className="relative z-10 flex items-start gap-4">
-                <div className={`
-                  p-2 rounded-lg 
-                  ${stepData.environment === id 
-                    ? "bg-background/10" 
-                    : "bg-foreground/5"}
-                `}>
-                  <Icon className="w-5 h-5" />
-                </div>
-                <div className="space-y-1">
-                  <div className="text-base font-medium">{label}</div>
-                  <div className={`text-sm ${
-                    stepData.environment === id 
-                      ? "text-background/70" 
-                      : "text-muted-foreground"
-                  }`}>
-                    {description}
-                  </div>
+              <div className="flex items-center gap-3">
+                <Icon className="w-4 h-4 shrink-0" />
+                <div className="min-w-0">
+                  <div className="text-base truncate">{label}</div>
+                  <div className="text-sm text-[#333333]/70 truncate">{description}</div>
                 </div>
               </div>
             </motion.button>

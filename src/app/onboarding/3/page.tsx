@@ -47,10 +47,10 @@ export default function OnboardingMood() {
               key={id}
               onClick={() => handleSelect(id)}
               className={`
-                relative p-4 rounded-full text-center transition-all
+                relative p-4 rounded-full text-center transition-all ${color}
                 ${stepData.mood === id 
-                  ? "bg-foreground text-background scale-110" 
-                  : `${color} hover:scale-105`}
+                  ? "border border-[#333333]/50" 
+                  : "hover:scale-105"}
               `}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -60,15 +60,7 @@ export default function OnboardingMood() {
                 y: { type: "spring", stiffness: 300, damping: 20 }
               }}
             >
-              {/* Selection indicator */}
-              {stepData.mood === id && (
-                <motion.div
-                  layoutId="mood-selection"
-                  className="absolute inset-0 rounded-full bg-foreground -z-10"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              <span className="relative z-10 text-base">{label}</span>
+              <span className="text-base">{label}</span>
             </motion.button>
           ))}
         </div>
