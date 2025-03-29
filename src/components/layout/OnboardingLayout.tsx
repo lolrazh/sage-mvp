@@ -20,7 +20,7 @@ export function OnboardingLayout({
   return (
     <main className="min-h-screen relative">
       {/* Fixed progress bar */}
-      <div className="fixed top-12 left-0 right-0 px-6">
+      <div className="fixed top-24 left-0 right-0 px-6">
         <div className="max-w-md mx-auto">
           <Progress value={(step / TOTAL_STEPS) * 100} className="h-[2px] bg-[#333333]/10" />
         </div>
@@ -32,7 +32,7 @@ export function OnboardingLayout({
           <div className="space-y-8">
             {/* Header */}
             <div className="text-center space-y-1">
-              <h1 className="text-[28px] font-serif tracking-[-0.03em]">{title}</h1>
+              <h1 className="text-[32px] font-serif font-medium tracking-[-0.03em]">{title}</h1>
               <p className="text-sm text-[#333333]/80">{subtitle}</p>
             </div>
 

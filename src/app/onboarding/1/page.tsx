@@ -29,7 +29,7 @@ export default function OnboardingName() {
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-transparent border-b border-t-0 border-x-0 rounded-none px-0 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center"
+            className="bg-transparent border rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center"
             placeholder="type your name"
             autoFocus
           />
@@ -42,7 +42,7 @@ export default function OnboardingName() {
             onClick={() => router.push("/")}
             className="font-medium min-w-[80px]"
           >
-            back
+            <span>back</span>
           </Button>
           <Button 
             size="default"
