@@ -18,22 +18,27 @@ export function OnboardingLayout({
   subtitle,
 }: OnboardingLayoutProps) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6">
-      <div className="w-full max-w-md mx-auto h-[70vh] flex flex-col">
-        {/* Progress */}
-        <div className="mb-16">
-          <Progress value={(step / TOTAL_STEPS) * 100} className="h-[1px] bg-[#1C1B1F]/10" />
+    <main className="min-h-screen relative">
+      {/* Fixed progress bar */}
+      <div className="fixed top-12 left-0 right-0 px-6">
+        <div className="max-w-md mx-auto">
+          <Progress value={(step / TOTAL_STEPS) * 100} className="h-[2px] bg-[#333333]/10" />
         </div>
+      </div>
 
-        {/* Header */}
-        <div className="space-y-1 mb-12 text-center">
-          <h1 className="text-[28px] font-serif tracking-[-0.03em]">{title}</h1>
-          <p className="text-sm text-[#1C1B1F]/60">{subtitle}</p>
-        </div>
+      {/* Content container */}
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <div className="w-full max-w-md">
+          <div className="space-y-8">
+            {/* Header */}
+            <div className="text-center space-y-1">
+              <h1 className="text-[28px] font-serif tracking-[-0.03em]">{title}</h1>
+              <p className="text-sm text-[#333333]/80">{subtitle}</p>
+            </div>
 
-        {/* Content */}
-        <div className="flex-1 flex flex-col">
-          {children}
+            {/* Content */}
+            {children}
+          </div>
         </div>
       </div>
     </main>

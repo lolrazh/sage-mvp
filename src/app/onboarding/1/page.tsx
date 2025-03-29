@@ -24,33 +24,31 @@ export default function OnboardingName() {
       title="what can i call you?"
       subtitle="this is the start of something meaningful"
     >
-      <div className="flex-1 flex flex-col">
-        <div className="flex-1 flex flex-col items-center justify-center -mt-12">
-          <div className="w-full max-w-[280px]">
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="bg-transparent border-b border-t-0 border-x-0 rounded-none px-0 h-12 text-base focus-visible:ring-0 placeholder:text-foreground/30 text-center"
-              placeholder="type your name"
-              autoFocus
-            />
-          </div>
+      <div className="space-y-12">
+        <div className="w-full max-w-[280px] mx-auto">
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="bg-transparent border-b border-t-0 border-x-0 rounded-none px-0 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center"
+            placeholder="type your name"
+            autoFocus
+          />
         </div>
 
-        <div className="flex justify-center gap-3 mb-6">
+        <div className="flex justify-center gap-3">
           <Button 
             variant="ghost" 
-            size="sm"
+            size="default"
             onClick={() => router.push("/")}
-            className="text-xs font-normal"
+            className="font-medium min-w-[80px]"
           >
             back
           </Button>
           <Button 
-            size="sm"
+            size="default"
             disabled={!name.trim()}
             onClick={handleNext}
-            className="text-xs font-normal bg-[#1C1B1F] text-white hover:opacity-90"
+            className="font-medium min-w-[80px] bg-[#333333] hover:bg-[#333333]/90"
           >
             next
           </Button>
