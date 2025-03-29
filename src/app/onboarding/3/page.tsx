@@ -50,17 +50,18 @@ export default function OnboardingMood() {
                 relative p-4 rounded-full text-center transition-all ${color}
                 ${stepData.mood === id 
                   ? "border border-[#333333]/50" 
-                  : "hover:scale-105"}
+                  : ""}
+                transform hover:scale-[1.02] active:scale-[0.98]
               `}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
               transition={{
                 y: { type: "spring", stiffness: 300, damping: 20 }
               }}
             >
-              <span className="text-base">{label}</span>
+              <span className="text-base block">
+                {label}
+              </span>
             </motion.button>
           ))}
         </div>

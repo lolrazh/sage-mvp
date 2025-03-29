@@ -73,21 +73,20 @@ export default function OnboardingAspirations() {
                 onClick={() => handleSelect(id)}
                 className={`
                   relative p-4 rounded-full text-left transition-all ${color}
-                  ${isSelected ? "border border-[#333333]/50" : "hover:scale-105"}
+                  ${isSelected ? "border border-[#333333]/50" : ""}
+                  transform hover:scale-[1.02] active:scale-[0.98]
                 `}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
                 transition={{
                   y: { type: "spring", stiffness: 300, damping: 20 }
                 }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4 pl-2">
                   <Icon className="w-4 h-4 shrink-0" />
                   <div className="min-w-0">
-                    <div className="text-base truncate">{label}</div>
-                    <div className="text-sm text-[#333333]/70 truncate">{description}</div>
+                    <div className="text-sm truncate">{label}</div>
+                    <div className="text-xs text-[#333333]/70 truncate">{description}</div>
                   </div>
                 </div>
               </motion.button>
