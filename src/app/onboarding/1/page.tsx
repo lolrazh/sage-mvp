@@ -1,68 +1,73 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { AnimatedInput } from "@/components/ui/AnimatedInput";
+import { PageContainer } from "@/components/layout/PageContainer";
+import { useOnboardingStore } from "@/lib/store";
 import Link from "next/link";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function OnboardingName() {
-  const [name, setName] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const router = useRouter();
+  const { stepData, setStepData, completeStep } = useOnboardingStore();
+
+  const handleNext = () => {
+    completeStep("name");
+    router.push("/onboarding/2");
+  };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col items-center space-y-8 w-full max-w-xs"
-      >
-        <motion.h1 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-3xl font-serif lowercase tracking-tight text-center"
+    <PageContainer>
+      <div className="flex flex-col items-center justify-center min-h-[80vh] max-w-md mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full space-y-12"
         >
-          {!isFocused ? "what can i call you?" : ""}
-        </motion.h1>
-        <div className="w-full space-y-6">
-          <div className="relative">
-            <Input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholder={isFocused ? "" : "your name"}
-              className="text-center lowercase text-2xl py-6 transition-all duration-200 bg-transparent border-none focus:ring-0 placeholder:text-muted-foreground/50"
-            />
-            {isFocused && (
-              <motion.div 
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                className="absolute bottom-0 left-0 right-0 h-px bg-foreground/20"
-              />
-            )}
+          {/* Header */}
+          <div className="space-y-2 text-center">
+            <h1 className="text-4xl sm:text-5xl font-serif lowercase">
+              what can i call you?
+            </h1>
+            <p className="text-muted-foreground/70 text-lg">
+              this is the start of something meaningful
+            </p>
           </div>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: name.length > 0 ? 1 : 0 }}
-            className="flex justify-center gap-4 w-full"
-          >
-            <Button asChild variant="ghost" size="lg" className="lowercase w-32">
-              <Link href="/">back</Link>
-            </Button>
-            <Button 
-              asChild 
-              size="lg" 
-              className="lowercase w-32 transition-opacity duration-200"
-              disabled={name.length === 0}
-            >
-              <Link href="/onboarding/2">next</Link>
-            </Button>
-          </motion.div>
-        </div>
-      </motion.div>
-    </main>
+
+          {/* Input */}
+          <div className="space-y-8">
+            <AnimatedInput
+              type="text"
+              value={stepData.name}
+              onChange={(e) => setStepData("name", e.target.value)}
+              placeholder="your name"
+              className="text-center text-2xl py-6"
+              autoFocus
+            />
+
+            {/* Navigation */}
+            <div className="flex justify-center gap-4">
+              <Button 
+                asChild 
+                variant="ghost" 
+                size="lg" 
+                className="w-32"
+              >
+                <Link href="/">back</Link>
+              </Button>
+              <Button 
+                size="lg" 
+                className="w-32"
+                disabled={!stepData.name.trim()}
+                onClick={handleNext}
+              >
+                next
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </PageContainer>
   );
 } 
