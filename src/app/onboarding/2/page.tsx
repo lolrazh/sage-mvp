@@ -1,109 +1,92 @@
 "use client";
 
+import { OnboardingLayout } from "@/components/layout/OnboardingLayout";
+import { useOnboardingStore } from "@/lib/store";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useState } from "react";
-import { motion } from "framer-motion";
 
 const cultures = [
-  "american",
-  "indian",
-  "european",
-  "east asian",
-  "african",
-  "latin american",
-  "middle eastern",
-  "pacific islander",
+  { id: "american", label: "american" },
+  { id: "indian", label: "indian" },
+  { id: "european", label: "european" },
+  { id: "east_asian", label: "east asian" },
+  { id: "african", label: "african" },
+  { id: "latin", label: "latin american" },
+  { id: "middle_eastern", label: "middle eastern" },
+  { id: "pacific", label: "pacific islander" },
+  { id: "other", label: "other" },
 ];
 
 export default function OnboardingCulture() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const router = useRouter();
+  const { stepData, setStepData, completeStep } = useOnboardingStore();
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
-    },
+  const handleSelect = (id: string) => {
+    setStepData("culture", id);
   };
 
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
+  const handleNext = () => {
+    completeStep("culture");
+    router.push("/onboarding/3");
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col items-center space-y-8 w-full max-w-md"
-      >
-        <motion.h1 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-3xl font-serif lowercase tracking-tight text-center"
-        >
-          which culture do you identify with most?
-        </motion.h1>
-        <div className="w-full space-y-6">
-          <motion.div 
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-2 gap-3"
-          >
-            {cultures.map((culture) => (
-              <motion.div key={culture} variants={item}>
-                <Button
-                  variant="outline"
-                  className={`lowercase h-auto py-4 text-base w-full transition-all duration-200 ${
-                    selected === culture 
-                      ? "bg-foreground text-background border-foreground"
-                      : "hover:bg-muted"
-                  }`}
-                  onClick={() => setSelected(culture)}
-                >
-                  {culture}
-                </Button>
-              </motion.div>
-            ))}
-            <motion.div variants={item}>
-              <Button
-                variant="outline"
-                className={`lowercase h-auto py-4 text-base w-full transition-all duration-200 ${
-                  selected === "other" 
-                    ? "bg-foreground text-background border-foreground"
-                    : "hover:bg-muted"
-                }`}
-                onClick={() => setSelected("other")}
-              >
-                other
-              </Button>
-            </motion.div>
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: selected ? 1 : 0 }}
-            className="flex justify-center gap-4 w-full"
-          >
-            <Button asChild variant="ghost" size="lg" className="lowercase w-32">
-              <Link href="/onboarding/1">back</Link>
-            </Button>
-            <Button 
-              asChild 
-              size="lg" 
-              className="lowercase w-32"
-              disabled={!selected}
+    <OnboardingLayout
+      step={2}
+      title="which culture do you identify with?"
+      subtitle="this helps me understand your perspective better"
+    >
+      <div className="space-y-10">
+        {/* Culture grid */}
+        <div className="grid grid-cols-2 gap-3">
+          {cultures.map(({ id, label }) => (
+            <motion.button
+              key={id}
+              onClick={() => handleSelect(id)}
+              className={`
+                relative p-6 rounded-lg text-left transition-colors
+                ${stepData.culture === id 
+                  ? "bg-foreground text-background" 
+                  : "bg-muted/50 hover:bg-muted"}
+              `}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <Link href="/onboarding/3">next</Link>
-            </Button>
-          </motion.div>
+              {/* Selection indicator */}
+              {stepData.culture === id && (
+                <motion.div
+                  layoutId="culture-selection"
+                  className="absolute inset-0 rounded-lg bg-foreground -z-10"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10 text-base">{label}</span>
+            </motion.button>
+          ))}
         </div>
-      </motion.div>
-    </main>
+
+        {/* Navigation */}
+        <div className="flex justify-center gap-6 pt-4">
+          <Button 
+            asChild 
+            variant="ghost" 
+            size="lg" 
+            className="w-32 transition-opacity hover:opacity-70"
+          >
+            <Link href="/onboarding/1">back</Link>
+          </Button>
+          <Button 
+            size="lg" 
+            className="w-32 transition-all duration-300"
+            disabled={!stepData.culture}
+            onClick={handleNext}
+          >
+            next
+          </Button>
+        </div>
+      </div>
+    </OnboardingLayout>
   );
 } 

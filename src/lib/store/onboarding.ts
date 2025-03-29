@@ -6,8 +6,7 @@ export type OnboardingStep =
   | "mood"
   | "environment"
   | "aspirations"
-  | "perception"
-  | "reflection";
+  | "firstEntry";
 
 interface OnboardingState {
   currentStep: OnboardingStep;
@@ -29,8 +28,7 @@ const initialState = {
     mood: "",
     environment: "",
     aspirations: [],
-    perception: "",
-    reflection: "",
+    firstEntry: "",
   },
 };
 
@@ -65,10 +63,8 @@ export const useOnboardingStore = create<OnboardingState>()((set, get) => ({
         return Boolean(stepData.environment);
       case "aspirations":
         return stepData.aspirations.length > 0;
-      case "perception":
-        return Boolean(stepData.perception);
-      case "reflection":
-        return true; // Optional step
+      case "firstEntry":
+        return Boolean(stepData.firstEntry.trim());
       default:
         return false;
     }

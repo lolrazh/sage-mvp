@@ -1,106 +1,98 @@
 "use client";
 
+import { OnboardingLayout } from "@/components/layout/OnboardingLayout";
+import { useOnboardingStore } from "@/lib/store";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useState } from "react";
-import { motion } from "framer-motion";
 
 const moods = [
-  "calm",
-  "anxious",
-  "hopeful",
-  "tired",
-  "excited",
-  "sad",
-  "grateful",
-  "overwhelmed",
-  "content",
-  "frustrated",
+  { id: "calm", label: "calm", color: "bg-blue-500/10" },
+  { id: "anxious", label: "anxious", color: "bg-yellow-500/10" },
+  { id: "hopeful", label: "hopeful", color: "bg-green-500/10" },
+  { id: "tired", label: "tired", color: "bg-purple-500/10" },
+  { id: "excited", label: "excited", color: "bg-orange-500/10" },
+  { id: "sad", label: "sad", color: "bg-indigo-500/10" },
+  { id: "grateful", label: "grateful", color: "bg-pink-500/10" },
+  { id: "overwhelmed", label: "overwhelmed", color: "bg-red-500/10" },
+  { id: "content", label: "content", color: "bg-teal-500/10" },
+  { id: "frustrated", label: "frustrated", color: "bg-rose-500/10" },
 ];
 
 export default function OnboardingMood() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const router = useRouter();
+  const { stepData, setStepData, completeStep } = useOnboardingStore();
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
-    },
+  const handleSelect = (id: string) => {
+    setStepData("mood", id);
   };
 
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
+  const handleNext = () => {
+    completeStep("mood");
+    router.push("/onboarding/4");
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col items-center space-y-8 w-full max-w-md"
-      >
-        <motion.h1 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-3xl font-serif lowercase tracking-tight text-center"
-        >
-          how are you feeling right now?
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-muted-foreground text-center"
-        >
-          choose one word that best describes your current state
-        </motion.p>
-        <div className="w-full space-y-6">
-          <motion.div 
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-2 sm:grid-cols-3 gap-3"
-          >
-            {moods.map((mood) => (
-              <motion.div key={mood} variants={item}>
-                <Button
-                  variant="outline"
-                  className={`lowercase h-auto py-4 text-base w-full transition-all duration-200 ${
-                    selected === mood 
-                      ? "bg-foreground text-background border-foreground"
-                      : "hover:bg-muted"
-                  }`}
-                  onClick={() => setSelected(mood)}
-                >
-                  {mood}
-                </Button>
-              </motion.div>
-            ))}
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: selected ? 1 : 0 }}
-            className="flex justify-center gap-4 w-full"
-          >
-            <Button asChild variant="ghost" size="lg" className="lowercase w-32">
-              <Link href="/onboarding/2">back</Link>
-            </Button>
-            <Button 
-              asChild 
-              size="lg" 
-              className="lowercase w-32"
-              disabled={!selected}
+    <OnboardingLayout
+      step={3}
+      title="how are you feeling right now?"
+      subtitle="choose one word that best describes your current state"
+    >
+      <div className="space-y-10">
+        {/* Mood cloud */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {moods.map(({ id, label, color }) => (
+            <motion.button
+              key={id}
+              onClick={() => handleSelect(id)}
+              className={`
+                relative p-4 rounded-full text-center transition-all
+                ${stepData.mood === id 
+                  ? "bg-foreground text-background scale-110" 
+                  : `${color} hover:scale-105`}
+              `}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{
+                y: { type: "spring", stiffness: 300, damping: 20 }
+              }}
             >
-              <Link href="/onboarding/4">next</Link>
-            </Button>
-          </motion.div>
+              {/* Selection indicator */}
+              {stepData.mood === id && (
+                <motion.div
+                  layoutId="mood-selection"
+                  className="absolute inset-0 rounded-full bg-foreground -z-10"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10 text-base">{label}</span>
+            </motion.button>
+          ))}
         </div>
-      </motion.div>
-    </main>
+
+        {/* Navigation */}
+        <div className="flex justify-center gap-6 pt-4">
+          <Button 
+            asChild 
+            variant="ghost" 
+            size="lg" 
+            className="w-32 transition-opacity hover:opacity-70"
+          >
+            <Link href="/onboarding/2">back</Link>
+          </Button>
+          <Button 
+            size="lg" 
+            className="w-32 transition-all duration-300"
+            disabled={!stepData.mood}
+            onClick={handleNext}
+          >
+            next
+          </Button>
+        </div>
+      </div>
+    </OnboardingLayout>
   );
 } 
