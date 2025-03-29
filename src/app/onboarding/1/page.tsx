@@ -5,6 +5,7 @@ import { useOnboardingStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function OnboardingName() {
@@ -29,26 +30,26 @@ export default function OnboardingName() {
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-transparent border rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center"
+            className="bg-transparent border border-[#333333]/50 rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center"
             placeholder="type your name"
             autoFocus
           />
         </div>
 
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-6 pt-4">
           <Button 
+            asChild 
             variant="ghost" 
-            size="default"
-            onClick={() => router.push("/")}
-            className="font-medium min-w-[80px]"
+            size="lg" 
+            className="w-32 transition-opacity hover:opacity-70"
           >
-            <span>back</span>
+            <Link href="/">back</Link>
           </Button>
           <Button 
-            size="default"
+            size="lg" 
+            className="w-32 transition-all duration-300"
             disabled={!name.trim()}
             onClick={handleNext}
-            className="font-medium min-w-[80px] bg-[#333333] hover:bg-[#333333]/90"
           >
             next
           </Button>

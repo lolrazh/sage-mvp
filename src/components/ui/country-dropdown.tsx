@@ -85,7 +85,7 @@ const CountryDropdownComponent = (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         ref={ref}
-        className="w-full max-w-[280px] mx-auto bg-transparent border rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase"
+        className="w-full max-w-[280px] mx-auto bg-transparent border border-[#333333]/50 rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase"
         disabled={disabled}
         {...props}
       >
@@ -97,7 +97,7 @@ const CountryDropdownComponent = (
       <PopoverContent
         collisionPadding={10}
         side="bottom"
-        className="min-w-[280px] p-0 bg-[#F9F1E8] rounded-xl border-[#333333]/50"
+        className="min-w-[280px] p-0 bg-[#F9F1E8] rounded-xl border border-[#333333]/50"
         style={{
           '--scrollbar-width': '8px',
           '--scrollbar-track-bg': 'transparent',
@@ -118,7 +118,7 @@ const CountryDropdownComponent = (
                 .filter((x) => x.name)
                 .map((option, key: number) => (
                   <CommandItem
-                    className="flex items-center w-full gap-2 py-2 px-2 lowercase text-sm rounded-lg aria-selected:bg-[#333333] aria-selected:text-[#F9F1E8]"
+                    className="flex items-center w-full gap-2 py-2 px-2 lowercase text-sm rounded-lg hover:bg-[#333333]/10 aria-selected:bg-[#333333] aria-selected:text-[#F9F1E8]"
                     key={key}
                     onSelect={() => handleSelect(option)}
                   >

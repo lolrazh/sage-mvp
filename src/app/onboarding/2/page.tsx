@@ -23,7 +23,7 @@ export default function OnboardingCulture() {
   return (
     <OnboardingLayout
       step={2}
-      title="which country are you from?"
+      title="where are you from?"
       subtitle="this helps me understand your perspective better"
     >
       <div className="space-y-10">
