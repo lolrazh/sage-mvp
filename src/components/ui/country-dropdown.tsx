@@ -15,8 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { ChevronDown, CheckIcon, Globe } from "lucide-react";
-import { CircleFlag } from "react-circle-flags";
+import { ChevronDown, CheckIcon } from "lucide-react";
 import { countries } from "country-data-list";
 
 export interface Country {
@@ -37,7 +36,6 @@ interface CountryDropdownProps {
   defaultValue?: string;
   disabled?: boolean;
   placeholder?: string;
-  slim?: boolean;
 }
 
 const CountryDropdownComponent = (
@@ -49,8 +47,7 @@ const CountryDropdownComponent = (
     onChange,
     defaultValue,
     disabled = false,
-    placeholder = "Select a country",
-    slim = false,
+    placeholder = "select your country",
     ...props
   }: CountryDropdownProps,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -77,7 +74,6 @@ const CountryDropdownComponent = (
 
   const handleSelect = useCallback(
     (country: Country) => {
-      console.log("🌍 CountryDropdown value: ", country);
       setSelectedCountry(country);
       onChange?.(country);
       setOpen(false);
@@ -85,78 +81,53 @@ const CountryDropdownComponent = (
     [onChange]
   );
 
-  const triggerClasses = cn(
-    "flex h-14 w-full items-center justify-between whitespace-nowrap rounded-full border border-input bg-transparent px-4 py-2 text-lg shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-    slim === true && "w-20"
-  );
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         ref={ref}
-        className={triggerClasses}
+        className="w-full max-w-[280px] mx-auto bg-transparent border rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-[#333333]/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase"
         disabled={disabled}
         {...props}
       >
-        {selectedCountry ? (
-          <div className="flex items-center flex-grow w-0 gap-2 overflow-hidden">
-            <div className="inline-flex items-center justify-center w-6 h-6 shrink-0 overflow-hidden rounded-full">
-              <CircleFlag
-                countryCode={selectedCountry.alpha2.toLowerCase()}
-                height={24}
-              />
-            </div>
-            {slim === false && (
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                {selectedCountry.name}
-              </span>
-            )}
-          </div>
-        ) : (
-          <span>
-            {slim === false ? (
-              placeholder || setSelectedCountry?.name
-            ) : (
-              <Globe size={24} />
-            )}
-          </span>
-        )}
-        <ChevronDown size={20} className="opacity-50" />
+        <span className="flex-1">
+          {selectedCountry ? selectedCountry.name.toLowerCase() : placeholder}
+        </span>
+        <ChevronDown size={16} className="opacity-50 shrink-0 ml-2" />
       </PopoverTrigger>
       <PopoverContent
         collisionPadding={10}
         side="bottom"
-        className="min-w-[--radix-popper-anchor-width] p-0"
+        className="min-w-[280px] p-0 bg-[#F9F1E8] rounded-xl border-[#333333]/50"
+        style={{
+          '--scrollbar-width': '8px',
+          '--scrollbar-track-bg': 'transparent',
+          '--scrollbar-thumb-bg': 'rgba(51, 51, 51, 0.3)',
+        } as React.CSSProperties}
       >
         <Command className="w-full max-h-[300px]">
-          <CommandList>
-            <div className="sticky top-0 z-10 bg-popover">
-              <CommandInput placeholder="Search country..." />
+          <CommandList className="[&_[cmdk-list-sizer]]:!py-2 [&_[cmdk-list]]:!px-2 overflow-y-auto">
+            <div className="sticky top-0 z-10 bg-[#F9F1E8] border-b border-[#333333]/10 mx-2">
+              <CommandInput 
+                placeholder="search country..." 
+                className="lowercase h-12 px-2 border-none focus-visible:ring-0"
+              />
             </div>
-            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandEmpty className="lowercase text-sm py-6 text-center text-[#333333]/50">no country found.</CommandEmpty>
             <CommandGroup>
               {options
                 .filter((x) => x.name)
                 .map((option, key: number) => (
                   <CommandItem
-                    className="flex items-center w-full gap-2 py-2"
+                    className="flex items-center w-full gap-2 py-2 px-2 lowercase text-sm rounded-lg aria-selected:bg-[#333333] aria-selected:text-[#F9F1E8]"
                     key={key}
                     onSelect={() => handleSelect(option)}
                   >
-                    <div className="flex flex-grow w-0 space-x-2 overflow-hidden">
-                      <div className="inline-flex items-center justify-center w-6 h-6 shrink-0 overflow-hidden rounded-full">
-                        <CircleFlag
-                          countryCode={option.alpha2.toLowerCase()}
-                          height={24}
-                        />
-                      </div>
-                      <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                        {option.name}
-                      </span>
-                    </div>
+                    <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {option.name.toLowerCase()}
+                    </span>
                     <CheckIcon
                       className={cn(
-                        "ml-auto h-4 w-4 shrink-0",
+                        "ml-auto h-3 w-3 shrink-0",
                         option.name === selectedCountry?.name
                           ? "opacity-100"
                           : "opacity-0"
@@ -168,6 +139,18 @@ const CountryDropdownComponent = (
           </CommandList>
         </Command>
       </PopoverContent>
+      <style jsx global>{`
+        .overflow-y-auto::-webkit-scrollbar {
+          width: var(--scrollbar-width);
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: var(--scrollbar-track-bg);
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: var(--scrollbar-thumb-bg);
+          border-radius: 20px;
+        }
+      `}</style>
     </Popover>
   );
 };
