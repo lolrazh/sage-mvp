@@ -13,6 +13,6 @@ We believe that true personal growth begins with understanding yourself at a dee
 - **Seamless, Adaptive Interaction:** With a unified interface that feels as natural as a conversation with a good friend, Sage lets you freely drop your thoughts. When you need deeper reflection or reassurance, Sage steps in with thoughtful questions and gentle nudges—always at the right moment.
 - **Accessible and Flexible:** As a web-based app, Sage is always within reach—ideal for both the casual venters and the committed self-explorers. Its simplicity means you spend less time figuring out how to use it and more time evolving.
 
-***Embrace the future of self-reflection with Sage.***
+**Embrace the future of self-reflection with Sage.**
 
-***Don’t just record your thoughts—transform them.***
+**Don’t just record your thoughts—transform them.**
