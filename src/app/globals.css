@@ -135,3 +135,23 @@
       "cv03" on, "cv04" on;
   }
 }
+
+/* Text selection styles */
+::selection {
+  background-color: var(--selection-bg, #333333);
+  color: var(--selection-text, #F9F1E8);
+}
+
+[style*="color: #333333"],
+[style*="color:#333333"],
+.text-\[\#333333\] {
+  --selection-bg: #333333;
+  --selection-text: #F9F1E8;
+}
+
+.dark [style*="color: #333333"],
+.dark [style*="color:#333333"],
+.dark .text-\[\#333333\] {
+  --selection-bg: #F9F1E8;
+  --selection-text: #333333;
+}
