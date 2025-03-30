@@ -62,58 +62,52 @@ export default function OnboardingAspirations() {
       title="what's most important to you right now?"
       subtitle="select all that resonate with your current journey"
     >
-      <div className="space-y-10">
-        {/* Aspiration cards */}
-        <div className="grid grid-cols-1 gap-3">
-          {aspirations.map(({ id, label, description, icon: Icon, color }) => {
-            const isSelected = selectedAspirations.includes(id);
-            return (
-              <motion.button
-                key={id}
-                onClick={() => handleSelect(id)}
-                className={`
-                  relative p-4 rounded-full text-left transition-all ${color}
-                  ${isSelected ? "border border-[#333333]/50" : ""}
-                  transform hover:scale-[1.02] active:scale-[0.98]
-                  cursor-pointer
-                `}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  y: { type: "spring", stiffness: 300, damping: 20 }
-                }}
-              >
-                <div className="flex items-center gap-4 pl-2">
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <div className="min-w-0">
-                    <div className="text-sm truncate">{label}</div>
-                    <div className="text-xs text-[#333333]/70 truncate">{description}</div>
-                  </div>
+      {/* Aspiration cards */}
+      <div className="flex-1 grid grid-cols-1 gap-3 mb-6">
+        {aspirations.map(({ id, label, description, icon: Icon, color }) => {
+          const isSelected = selectedAspirations.includes(id);
+          return (
+            <motion.button
+              key={id}
+              onClick={() => handleSelect(id)}
+              className={`
+                relative p-4 rounded-full text-left transition-colors ${color}
+                ${isSelected ? "border border-[#333333]/50" : ""}
+                hover:scale-[1.01] active:scale-[0.99]
+                cursor-pointer
+              `}
+              initial={false}
+            >
+              <div className="flex items-center gap-4 pl-2">
+                <Icon className="w-4 h-4 shrink-0" />
+                <div className="min-w-0">
+                  <div className="text-sm truncate">{label}</div>
+                  <div className="text-xs text-[#333333]/70 truncate">{description}</div>
                 </div>
-              </motion.button>
-            );
-          })}
-        </div>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
 
-        {/* Navigation */}
-        <div className="flex justify-center gap-6 pt-4">
-          <Button 
-            asChild 
-            variant="ghost" 
-            size="lg" 
-            className="w-32 transition-opacity hover:opacity-70"
-          >
-            <Link href="/onboarding/4">back</Link>
-          </Button>
-          <Button 
-            size="lg" 
-            className="w-32 transition-all duration-300"
-            disabled={selectedAspirations.length === 0}
-            onClick={handleNext}
-          >
-            next
-          </Button>
-        </div>
+      {/* Navigation */}
+      <div className="flex justify-center gap-6">
+        <Button 
+          asChild 
+          variant="ghost" 
+          size="lg" 
+          className="w-32 transition-opacity hover:opacity-70"
+        >
+          <Link href="/onboarding/4">back</Link>
+        </Button>
+        <Button 
+          size="lg" 
+          className="w-32 transition-all duration-300"
+          disabled={selectedAspirations.length === 0}
+          onClick={handleNext}
+        >
+          next
+        </Button>
       </div>
     </OnboardingLayout>
   );

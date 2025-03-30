@@ -59,7 +59,7 @@ export default function OnboardingEnvironment() {
       subtitle="choose the environment that resonates most with you"
     >
       {/* Options Container */}
-      <div className="flex-1 grid grid-cols-1 gap-3 mb-4">
+      <div className="flex-1 grid grid-cols-1 gap-3 mb-6">
         {environments.map(({ id, label, description, icon: Icon, color }) => (
           <motion.button
             key={id}
@@ -86,7 +86,7 @@ export default function OnboardingEnvironment() {
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-6">
         <Button 
           asChild 
           variant="ghost" 

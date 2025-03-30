@@ -39,53 +39,47 @@ export default function OnboardingMood() {
       title="how are you feeling right now?"
       subtitle="choose one word that best describes your current state"
     >
-      <div className="space-y-10">
-        {/* Mood cloud */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {moods.map(({ id, label, color }) => (
-            <motion.button
-              key={id}
-              onClick={() => handleSelect(id)}
-              className={`
-                relative p-4 rounded-full text-center transition-all ${color}
-                ${stepData.mood === id 
-                  ? "border border-[#333333]/50" 
-                  : ""}
-                transform hover:scale-[1.02] active:scale-[0.98]
-                cursor-pointer
-              `}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                y: { type: "spring", stiffness: 300, damping: 20 }
-              }}
-            >
-              <span className="text-base block">
-                {label}
-              </span>
-            </motion.button>
-          ))}
-        </div>
+      {/* Mood cloud */}
+      <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+        {moods.map(({ id, label, color }) => (
+          <motion.button
+            key={id}
+            onClick={() => handleSelect(id)}
+            className={`
+              relative p-4 rounded-full text-center transition-colors ${color}
+              ${stepData.mood === id 
+                ? "border border-[#333333]/50" 
+                : ""}
+              hover:scale-[1.01] active:scale-[0.99]
+              cursor-pointer
+            `}
+            initial={false}
+          >
+            <span className="text-base block">
+              {label}
+            </span>
+          </motion.button>
+        ))}
+      </div>
 
-        {/* Navigation */}
-        <div className="flex justify-center gap-6 pt-4">
-          <Button 
-            asChild 
-            variant="ghost" 
-            size="lg" 
-            className="w-32 transition-opacity hover:opacity-70"
-          >
-            <Link href="/onboarding/2">back</Link>
-          </Button>
-          <Button 
-            size="lg" 
-            className="w-32 transition-all duration-300"
-            disabled={!stepData.mood}
-            onClick={handleNext}
-          >
-            next
-          </Button>
-        </div>
+      {/* Navigation */}
+      <div className="flex justify-center gap-6">
+        <Button 
+          asChild 
+          variant="ghost" 
+          size="lg" 
+          className="w-32 transition-opacity hover:opacity-70"
+        >
+          <Link href="/onboarding/2">back</Link>
+        </Button>
+        <Button 
+          size="lg" 
+          className="w-32 transition-all duration-300"
+          disabled={!stepData.mood}
+          onClick={handleNext}
+        >
+          next
+        </Button>
       </div>
     </OnboardingLayout>
   );
