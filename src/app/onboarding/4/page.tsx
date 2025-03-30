@@ -58,57 +58,51 @@ export default function OnboardingEnvironment() {
       title="where do you feel most like yourself?"
       subtitle="choose the environment that resonates most with you"
     >
-      <div className="space-y-10">
-        {/* Environment cards */}
-        <div className="grid grid-cols-1 gap-3">
-          {environments.map(({ id, label, description, icon: Icon, color }) => (
-            <motion.button
-              key={id}
-              onClick={() => handleSelect(id)}
-              className={`
-                relative p-4 rounded-full text-left transition-all ${color}
-                ${stepData.environment === id 
-                  ? "border border-[#333333]/50" 
-                  : ""}
-                transform hover:scale-[1.02] active:scale-[0.98]
-                cursor-pointer
-              `}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                y: { type: "spring", stiffness: 300, damping: 20 }
-              }}
-            >
-              <div className="flex items-center gap-4 pl-2">
-                <Icon className="w-4 h-4 shrink-0" />
-                <div className="min-w-0">
-                  <div className="text-sm truncate">{label}</div>
-                  <div className="text-xs text-[#333333]/70 truncate">{description}</div>
-                </div>
+      {/* Options Container */}
+      <div className="flex-1 grid grid-cols-1 gap-3 mb-4">
+        {environments.map(({ id, label, description, icon: Icon, color }) => (
+          <motion.button
+            key={id}
+            onClick={() => handleSelect(id)}
+            className={`
+              relative p-4 rounded-full text-left transition-colors ${color}
+              ${stepData.environment === id 
+                ? "border border-[#333333]/50" 
+                : ""}
+              hover:scale-[1.01] active:scale-[0.99]
+              cursor-pointer
+            `}
+            initial={false}
+          >
+            <div className="flex items-center gap-4 pl-2">
+              <Icon className="w-4 h-4 shrink-0" />
+              <div className="min-w-0">
+                <div className="text-sm truncate">{label}</div>
+                <div className="text-xs text-[#333333]/70 truncate">{description}</div>
               </div>
-            </motion.button>
-          ))}
-        </div>
+            </div>
+          </motion.button>
+        ))}
+      </div>
 
-        {/* Navigation */}
-        <div className="flex justify-center gap-6 pt-4">
-          <Button 
-            asChild 
-            variant="ghost" 
-            size="lg" 
-            className="w-32 transition-opacity hover:opacity-70"
-          >
-            <Link href="/onboarding/3">back</Link>
-          </Button>
-          <Button 
-            size="lg" 
-            className="w-32 transition-all duration-300"
-            disabled={!stepData.environment}
-            onClick={handleNext}
-          >
-            next
-          </Button>
-        </div>
+      {/* Navigation */}
+      <div className="flex justify-center gap-4">
+        <Button 
+          asChild 
+          variant="ghost" 
+          size="lg" 
+          className="w-32 transition-opacity hover:opacity-70"
+        >
+          <Link href="/onboarding/3">back</Link>
+        </Button>
+        <Button 
+          size="lg" 
+          className="w-32 transition-all duration-300"
+          disabled={!stepData.environment}
+          onClick={handleNext}
+        >
+          next
+        </Button>
       </div>
     </OnboardingLayout>
   );

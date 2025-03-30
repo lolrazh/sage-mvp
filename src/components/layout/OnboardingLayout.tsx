@@ -29,7 +29,7 @@ export function OnboardingLayout({
       {/* Content container */}
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="w-full max-w-md">
-          <div className="space-y-8">
+          <div className="space-y-6">
             {/* Header */}
             <div className="text-center space-y-1">
               <h1 className="text-[40px] font-serif font-medium tracking-[-0.03em] leading-tight">{title}</h1>
@@ -37,7 +37,11 @@ export function OnboardingLayout({
             </div>
 
             {/* Content */}
-            {children}
+            <div className="min-h-[300px] flex flex-col">
+              <div className="flex-1">
+                {children}
+              </div>
+            </div>
           </div>
         </div>
       </div>
