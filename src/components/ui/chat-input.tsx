@@ -26,6 +26,14 @@ export function ChatInput({
   const [isWrapped, setIsWrapped] = useState(false);
   const [needsScroll, setNeedsScroll] = useState(false);
 
+  const resetHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${minHeight}px`;
+      setIsWrapped(false);
+      setNeedsScroll(false);
+    }
+  };
+
   const adjustHeight = (reset = false) => {
     if (textareaRef.current) {
       const textarea = textareaRef.current;
@@ -44,7 +52,8 @@ export function ChatInput({
     if (message.trim() && !disabled) {
       onSend(message);
       setMessage("");
-      adjustHeight(true);
+      // Use requestAnimationFrame to ensure state updates before reset
+      requestAnimationFrame(resetHeight);
     }
   };
 
@@ -69,7 +78,7 @@ export function ChatInput({
         className={cn(
           "resize-none bg-background/50 backdrop-blur-sm border-foreground/10 focus-visible:ring-1 focus-visible:ring-foreground/20 px-4 py-3 pr-12",
           "transition-[border-radius] duration-75",
-          isWrapped ? "rounded-2xl" : "rounded-full",
+          isWrapped ? "rounded-[24px]" : "rounded-full",
           needsScroll ? "overflow-y-auto" : "overflow-hidden",
           `min-h-[${minHeight}px] max-h-[${maxHeight}px]`,
           "[transition:height_0s] [transition-property:height]"
@@ -84,21 +93,27 @@ export function ChatInput({
       >
         <Send className="h-4 w-4" />
       </Button>
-      <style jsx>{`
-        textarea::-webkit-scrollbar {
-          width: 4px;
-        }
-        textarea::-webkit-scrollbar-track {
+      <style jsx global>{`
+        .chat-input textarea::-webkit-scrollbar,
+        .chat-input textarea::-moz-scrollbar {
+          width: 3px;
           background: transparent;
         }
-        textarea::-webkit-scrollbar-thumb {
-          background-color: rgba(51, 51, 51, 0.2);
-          border-radius: 20px;
+        .chat-input textarea::-webkit-scrollbar-track,
+        .chat-input textarea::-moz-scrollbar-track {
+          background: transparent;
         }
-        textarea:hover::-webkit-scrollbar-thumb {
-          background-color: rgba(51, 51, 51, 0.4);
+        .chat-input textarea::-webkit-scrollbar-thumb,
+        .chat-input textarea::-moz-scrollbar-thumb {
+          background-color: rgba(51, 51, 51, 0.15);
+          border-radius: 3px;
         }
-        textarea::-webkit-scrollbar-button {
+        .chat-input textarea:hover::-webkit-scrollbar-thumb,
+        .chat-input textarea:hover::-moz-scrollbar-thumb {
+          background-color: rgba(51, 51, 51, 0.25);
+        }
+        .chat-input textarea::-webkit-scrollbar-button,
+        .chat-input textarea::-moz-scrollbar-button {
           display: none;
         }
       `}</style>

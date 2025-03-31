@@ -3,15 +3,25 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { User, Bot } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
 
 interface ChatMessageProps {
   content: string;
   role: "user" | "assistant";
-  timestamp?: number;
 }
 
-export function ChatMessage({ content, role, timestamp }: ChatMessageProps) {
+export function ChatMessage({ content, role }: ChatMessageProps) {
   const isUser = role === "user";
+  const messageRef = useRef<HTMLDivElement>(null);
+  const [isWrapped, setIsWrapped] = useState(false);
+
+  useEffect(() => {
+    if (messageRef.current) {
+      const message = messageRef.current;
+      const lineHeight = parseInt(getComputedStyle(message).lineHeight);
+      setIsWrapped(message.scrollHeight > lineHeight);
+    }
+  }, [content]);
 
   return (
     <motion.div
@@ -28,22 +38,16 @@ export function ChatMessage({ content, role, timestamp }: ChatMessageProps) {
         </div>
       )}
       <div
+        ref={messageRef}
         className={cn(
-          "max-w-[80%] rounded-2xl px-4 py-3",
+          "max-w-[80%] px-4 py-3 break-words whitespace-pre-wrap transition-[border-radius] duration-75",
+          isWrapped ? "rounded-[24px]" : "rounded-full",
           isUser
             ? "bg-[#333333] text-white"
             : "bg-[#333333]/5 text-foreground"
         )}
       >
-        <p className="text-sm whitespace-pre-wrap">{content}</p>
-        {timestamp && (
-          <p className="text-xs mt-1 opacity-50">
-            {new Date(timestamp).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
-        )}
+        <p className="text-sm">{content}</p>
       </div>
       {isUser && (
         <div className="w-8 h-8 rounded-full bg-[#333333]/10 flex items-center justify-center shrink-0">

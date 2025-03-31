@@ -8,7 +8,6 @@ interface Message {
   id: string;
   content: string;
   role: "user" | "assistant";
-  timestamp: number;
 }
 
 export default function ChatPage() {
@@ -30,7 +29,6 @@ export default function ChatPage() {
       id: Date.now().toString(),
       content,
       role: "user",
-      timestamp: Date.now(),
     };
 
     setMessages((prev) => [...prev, newMessage]);
@@ -42,7 +40,6 @@ export default function ChatPage() {
         id: (Date.now() + 1).toString(),
         content: "I'm here to help you with your daily reflection and personal growth journey.",
         role: "assistant",
-        timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, aiResponse]);
     }, 1000);
@@ -63,7 +60,6 @@ export default function ChatPage() {
                   key={message.id}
                   content={message.content}
                   role={message.role}
-                  timestamp={message.timestamp}
                 />
               ))}
               <div ref={messagesEndRef} />
@@ -73,7 +69,9 @@ export default function ChatPage() {
       </div>
       <div className="sticky bottom-0 bg-background/80 backdrop-blur-sm">
         <div className="max-w-[60%] mx-auto p-4">
-          <ChatInput onSend={handleSendMessage} />
+          <div className="chat-input">
+            <ChatInput onSend={handleSendMessage} />
+          </div>
         </div>
       </div>
     </div>
