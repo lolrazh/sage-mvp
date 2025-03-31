@@ -19,7 +19,7 @@ export function ChatInput({
   disabled = false, 
   placeholder = "type anything...",
   minHeight = 48,
-  maxHeight = 200
+  maxHeight = 216 // 9 lines * 24px line height
 }: ChatInputProps) {
   const [message, setMessage] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -31,9 +31,8 @@ export function ChatInput({
       textarea.style.height = reset ? `${minHeight}px` : "auto";
       textarea.style.height = `${textarea.scrollHeight}px`;
       
-      // Check if text has wrapped
-      const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
-      setIsWrapped(textarea.scrollHeight > lineHeight);
+      // If height is greater than minHeight, text has wrapped
+      setIsWrapped(textarea.offsetHeight > minHeight);
     }
   };
 
@@ -64,9 +63,10 @@ export function ChatInput({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className={cn(
-          "resize-none bg-background/50 backdrop-blur-sm border-foreground/10 focus-visible:ring-1 focus-visible:ring-foreground/20 transition-all px-4 py-3 pr-12",
+          "resize-none bg-background/50 backdrop-blur-sm border-foreground/10 focus-visible:ring-1 focus-visible:ring-foreground/20 px-4 py-3 pr-12",
+          "transition-[border-radius] duration-150",
           isWrapped ? "rounded-2xl" : "rounded-full",
-          "scrollbar-thin scrollbar-thumb-foreground/10 scrollbar-track-transparent hover:scrollbar-thumb-foreground/20",
+          "overflow-y-auto",
           `min-h-[${minHeight}px] max-h-[${maxHeight}px]`
         )}
         disabled={disabled}
@@ -79,6 +79,21 @@ export function ChatInput({
       >
         <Send className="h-4 w-4" />
       </Button>
+      <style jsx>{`
+        textarea::-webkit-scrollbar {
+          width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        textarea::-webkit-scrollbar-thumb {
+          background-color: rgba(51, 51, 51, 0.2);
+          border-radius: 20px;
+        }
+        textarea:hover::-webkit-scrollbar-thumb {
+          background-color: rgba(51, 51, 51, 0.4);
+        }
+      `}</style>
     </div>
   );
 } 
