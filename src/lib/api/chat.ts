@@ -1,16 +1,16 @@
-import { generateText, streamText, Message as AIMessage } from 'ai';
+import { generateText, Message as AIMessage } from 'ai';
 import { google } from '@ai-sdk/google';
 
 export type Message = AIMessage;
 
-export async function streamChatResponse(messages: Message[]) {
-  const result = streamText({
+export async function getChatResponse(messages: Message[]) {
+  const { text } = await generateText({
     model: google('gemini-2.0-flash-lite'),
     messages,
     system: 'You are a thoughtful AI companion helping users with daily reflection and personal growth. Your responses should be empathetic, insightful, and encourage self-discovery.',
   });
 
-  return result;
+  return text;
 }
 
 export async function chatHandler(req: Request) {
@@ -24,8 +24,10 @@ export async function chatHandler(req: Request) {
       return new Response('Messages must be an array', { status: 400 });
     }
 
-    const result = await streamChatResponse(messages);
-    return result.toTextStreamResponse();
+    const response = await getChatResponse(messages);
+    return new Response(JSON.stringify({ text: response }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Chat error:', error);
     return new Response('Internal server error', { status: 500 });
