@@ -64,10 +64,11 @@ export function ChatInput({
         placeholder={placeholder}
         className={cn(
           "resize-none bg-background/50 backdrop-blur-sm border-foreground/10 focus-visible:ring-1 focus-visible:ring-foreground/20 px-4 py-3 pr-12",
-          "transition-[border-radius] duration-150",
+          "transition-[border-radius] duration-75",
           isWrapped ? "rounded-2xl" : "rounded-full",
           "overflow-y-auto",
-          `min-h-[${minHeight}px] max-h-[${maxHeight}px]`
+          `min-h-[${minHeight}px] max-h-[${maxHeight}px]`,
+          "[transition:height_0s] [transition-property:height]"
         )}
         disabled={disabled}
       />
