@@ -12,6 +12,8 @@ interface ChatInputProps {
   placeholder?: string;
   minHeight?: number;
   maxHeight?: number;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export function ChatInput({ 
@@ -19,9 +21,11 @@ export function ChatInput({
   disabled = false, 
   placeholder = "type anything...",
   minHeight = 48,
-  maxHeight = 216 // 9 lines * 24px line height
+  maxHeight = 216, // 9 lines * 24px line height
+  value,
+  onChange
 }: ChatInputProps) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(value || "");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isWrapped, setIsWrapped] = useState(false);
   const [needsScroll, setNeedsScroll] = useState(false);
@@ -64,15 +68,25 @@ export function ChatInput({
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setMessage(newValue);
+    onChange?.(e);
+    adjustHeight();
+  };
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setMessage(value);
+    }
+  }, [value]);
+
   return (
     <div className="relative w-full">
       <Textarea
         ref={textareaRef}
         value={message}
-        onChange={(e) => {
-          setMessage(e.target.value);
-          adjustHeight();
-        }}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className={cn(

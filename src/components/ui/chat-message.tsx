@@ -7,7 +7,7 @@ import { useRef, useEffect, useState } from "react";
 
 interface ChatMessageProps {
   content: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system" | "data";
 }
 
 export function ChatMessage({ content, role }: ChatMessageProps) {
