@@ -1,4 +1,5 @@
 import { Lexend_Deca, Playfair_Display } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 const lexend = Lexend_Deca({ subsets: ["latin"], variable: "--font-sans" });
@@ -18,11 +19,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${lexend.variable} ${playfair.variable} font-sans antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

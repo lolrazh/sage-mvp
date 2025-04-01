@@ -13,7 +13,7 @@ export default function ChatPage() {
     initialMessages: [{
       id: 'welcome',
       role: 'assistant',
-      content: "Hi! I'm here to help you reflect and grow. What's on your mind today?"
+      content: "hi! i'm sage :)"
     }],
     onResponse: (response) => {
       console.log('Raw response from API:', response);
