@@ -85,7 +85,7 @@ export default function Home() {
               size="lg"
               className="w-full h-auto py-8 text-lg lowercase space-x-4 transition-all duration-200 hover:scale-[1.02] hover:bg-muted"
             >
-              <Link href="/insight">
+              <Link href="/insights">
                 <Sun className="w-5 h-5 opacity-70" />
                 <span>today's reflection</span>
               </Link>
