@@ -1,9 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Noise } from "@/components/ui/noise";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MessageSquare, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const greetings = [
   "you're safe here",
@@ -14,9 +16,12 @@ const greetings = [
 ];
 
 export default function Home() {
-  // In a real app, we'd get this from context/store
+  const [greeting, setGreeting] = useState("");
   const userName = "friend";
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+  useEffect(() => {
+    setGreeting(greetings[Math.floor(Math.random() * greetings.length)]);
+  }, []);
 
   const container = {
     hidden: { opacity: 0 },
@@ -34,7 +39,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-[#F9F1E8]">
+      <Noise />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -99,21 +105,6 @@ export default function Home() {
               </Link>
             </Button>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="pt-8"
-        >
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground/70 lowercase hover:text-foreground"
-          >
-            view past reflections
-          </Button>
         </motion.div>
       </motion.div>
     </main>

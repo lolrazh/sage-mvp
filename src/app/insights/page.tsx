@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Noise } from "@/components/ui/noise";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
@@ -35,6 +36,7 @@ const pastInsights = [
 export default function InsightsPage() {
   return (
     <main className="min-h-screen bg-[#F9F1E8] text-[#333333] selection:bg-primary selection:text-[#333333]">
+      <Noise />
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 p-6">
         <Link href="/home" className="inline-flex items-center text-[#333333]/70 hover:text-[#333333]">

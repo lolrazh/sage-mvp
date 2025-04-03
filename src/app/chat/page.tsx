@@ -2,6 +2,7 @@
 
 import { ChatInput } from "@/components/ui/chat-input";
 import { ChatMessage } from "@/components/ui/chat-message";
+import { Noise } from "@/components/ui/noise";
 import { useChat } from 'ai/react';
 import { useEffect, useRef } from "react";
 import Link from "next/link";
@@ -47,6 +48,7 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col h-screen">
+      <Noise />
       {/* Header with Back Button and Icon */}
       <div className="fixed top-0 left-0 right-0 p-6 flex items-center">
         <Link href="/home" className="inline-flex items-center text-[#333333]/70 hover:text-[#333333]">
