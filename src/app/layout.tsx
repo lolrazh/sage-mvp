@@ -1,5 +1,6 @@
 import { Lexend_Deca, Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { MainLayout } from "@/components/layout/MainLayout";
 import "./globals.css";
 
 const lexend = Lexend_Deca({ subsets: ["latin"], variable: "--font-sans" });
@@ -29,7 +30,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <MainLayout>{children}</MainLayout>
         </ThemeProvider>
       </body>
     </html>

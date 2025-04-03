@@ -2,7 +2,7 @@
 
 import { Button } from "./button";
 import { Textarea } from "./textarea";
-import { Send } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -101,11 +101,11 @@ export function ChatInput({
       />
       <Button
         size="icon"
-        className="absolute right-2 bottom-2 h-8 w-8 rounded-full bg-transparent hover:bg-[#333333]/5 disabled:opacity-50"
+        className="absolute right-2 bottom-2 h-8 w-8 rounded-full bg-foreground hover:bg-foreground/90 disabled:opacity-50"
         onClick={handleSubmit}
         disabled={!message.trim() || disabled}
       >
-        <Send className="h-4 w-4 stroke-[1.5px]" />
+        <ArrowUp className="h-4 w-4 text-background" />
       </Button>
       <style jsx global>{`
         .chat-input textarea::-webkit-scrollbar,
@@ -133,4 +133,4 @@ export function ChatInput({
       `}</style>
     </div>
   );
-} 
+}

@@ -28,12 +28,12 @@ export function ChatMessage({ content, role }: ChatMessageProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "flex gap-3 p-4",
+        "flex gap-3 p-4 items-start",
         isUser ? "justify-end" : "justify-start"
       )}
     >
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-[#333333]/10 flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center shrink-0">
           <Bot className="w-4 h-4" />
         </div>
       )}
@@ -43,14 +43,14 @@ export function ChatMessage({ content, role }: ChatMessageProps) {
           "max-w-[80%] px-4 py-3 break-words whitespace-pre-wrap transition-[border-radius] duration-75",
           isWrapped ? "rounded-[24px]" : "rounded-full",
           isUser
-            ? "bg-[#333333] text-white"
-            : "bg-[#333333]/5 text-foreground"
+            ? "bg-foreground text-background"
+            : "bg-foreground/5 text-foreground"
         )}
       >
         <p className="text-sm">{content}</p>
       </div>
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-[#333333]/10 flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center shrink-0">
           <User className="w-4 h-4" />
         </div>
       )}
