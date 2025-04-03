@@ -23,9 +23,13 @@ const moods = [
 export default function OnboardingMood() {
   const router = useRouter();
   const { stepData, setStepData, completeStep } = useOnboardingStore();
+  const selectedMoods = Array.isArray(stepData.mood) ? stepData.mood : [];
 
   const handleSelect = (id: string) => {
-    setStepData("mood", id);
+    const newMoods = selectedMoods.includes(id)
+      ? selectedMoods.filter(m => m !== id)
+      : [...selectedMoods, id];
+    setStepData("mood", newMoods);
   };
 
   const handleNext = () => {
@@ -37,7 +41,7 @@ export default function OnboardingMood() {
     <OnboardingLayout
       step={3}
       title="how are you feeling right now?"
-      subtitle="choose one word that best describes your current state"
+      subtitle="choose the words that best describe your current state"
     >
       {/* Mood cloud */}
       <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
@@ -47,7 +51,7 @@ export default function OnboardingMood() {
             onClick={() => handleSelect(id)}
             className={`
               relative p-4 rounded-full text-center transition-colors ${color}
-              ${stepData.mood === id 
+              ${selectedMoods.includes(id) 
                 ? "border border-[#333333]/50" 
                 : ""}
               hover:scale-[1.01] active:scale-[0.99]
@@ -75,7 +79,7 @@ export default function OnboardingMood() {
         <Button 
           size="lg" 
           className="w-32 transition-all duration-300"
-          disabled={!stepData.mood}
+          disabled={selectedMoods.length === 0}
           onClick={handleNext}
         >
           next

@@ -101,11 +101,11 @@ export function ChatInput({
       />
       <Button
         size="icon"
-        className="absolute right-2 bottom-2 h-8 w-8 rounded-full bg-[#333333] hover:bg-[#333333]/90 disabled:opacity-50"
+        className="absolute right-2 bottom-2 h-8 w-8 rounded-full bg-transparent hover:bg-[#333333]/5 disabled:opacity-50"
         onClick={handleSubmit}
         disabled={!message.trim() || disabled}
       >
-        <Send className="h-4 w-4" />
+        <Send className="h-4 w-4 stroke-[1.5px]" />
       </Button>
       <style jsx global>{`
         .chat-input textarea::-webkit-scrollbar,

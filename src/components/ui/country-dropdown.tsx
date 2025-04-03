@@ -106,11 +106,15 @@ const CountryDropdownComponent = (
         } as React.CSSProperties}
       >
         <Command className="w-full max-h-[300px]">
-          <CommandList className="[&_[cmdk-list-sizer]]:!py-2 [&_[cmdk-list]]:!px-2 overflow-y-auto scroll-top">
+          <CommandList className="[&_[cmdk-list-sizer]]:!py-2 [&_[cmdk-list]]:!px-2 overflow-y-auto">
             <div className="sticky top-0 z-10 bg-[#F9F1E8] border-b border-[#333333]/10 mx-2 mb-2">
               <CommandInput 
                 placeholder="search country..." 
                 className="lowercase h-12 px-2 border-none focus-visible:ring-0"
+                onValueChange={() => {
+                  const list = document.querySelector('[cmdk-list]');
+                  if (list) list.scrollTop = 0;
+                }}
               />
             </div>
             <CommandEmpty className="lowercase text-sm py-6 text-center text-[#333333]/50">no country found.</CommandEmpty>
