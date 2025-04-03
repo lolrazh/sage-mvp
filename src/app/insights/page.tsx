@@ -34,10 +34,10 @@ const pastInsights = [
 
 export default function InsightsPage() {
   return (
-    <main className="min-h-screen bg-[#F9F1E8] text-[#333333] selection:bg-[#333333] selection:text-[#F9F1E8]">
+    <main className="min-h-screen bg-[#F9F1E8] text-[#333333] selection:bg-primary selection:text-[#333333]">
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 p-6">
-        <Link href="/chat" className="inline-flex items-center text-[#333333]/70 hover:text-[#333333]">
+        <Link href="/home" className="inline-flex items-center text-[#333333]/70 hover:text-[#333333]">
           <ChevronLeft className="w-5 h-5" />
         </Link>
       </div>
@@ -47,40 +47,48 @@ export default function InsightsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-[#333333]/[0.03] rounded-3xl p-8"
+          className="relative border border-[#333333]/10 bg-[#333333]/[0.02] rounded-[32px] p-8 space-y-10 hover:bg-[#333333]/[0.03] transition-all"
         >
+          {/* Eye Icon */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#F9F1E8] border border-[#333333]/10 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#333333]" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </div>
+
           {/* Pattern Reflection */}
-          <div className="space-y-4 mb-12">
+          <div className="space-y-3">
             <h1 className="font-serif text-2xl leading-tight text-center">
               {todayInsight.pattern.headline}
             </h1>
-            <p className="text-[#333333] font-medium text-center text-sm">
+            <p className="text-[#333333]/70 text-center text-sm">
               {todayInsight.pattern.context}
             </p>
           </div>
 
           {/* Core Truth */}
-          <div className="mb-12">
-            <div className="bg-[#333333]/[0.02] rounded-2xl p-4">
-              <p className="text-center leading-relaxed text-sm">
+          <div>
+            <div className="border border-[#333333]/10 bg-[#333333]/[0.01] rounded-2xl p-4">
+              <p className="text-center leading-relaxed text-sm font-medium">
                 {todayInsight.truth}
               </p>
             </div>
           </div>
 
           {/* Invitation */}
-          <div className="mb-8">
+          <div>
             <p className="font-serif text-lg text-center leading-relaxed">
               {todayInsight.invitation}
             </p>
           </div>
 
           {/* Tags */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
+          <div className="flex flex-wrap justify-center gap-2">
             {todayInsight.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-[#333333]/[0.03] rounded-full text-xs text-[#333333]/70"
+                className="px-3 py-1 bg-[#333333]/[0.02] rounded-full text-xs text-[#333333]/70 hover:bg-[#333333]/[0.03] transition-colors"
               >
                 {tag}
               </span>
@@ -98,46 +106,50 @@ export default function InsightsPage() {
           </Button>
         </motion.div>
 
-        {/* Past Insights Timeline */}
-        <section className="mt-20 space-y-8">
-          <h2 className="font-serif text-xl text-center text-[#333333]/70">
-            your journey
+        {/* Divider */}
+        <div className="mt-20 mb-8 flex items-center gap-4">
+          <div className="h-px flex-1 bg-[#333333]/10"></div>
+          <h2 className="font-serif text-xl text-center text-[#333333]">
+            past insights
           </h2>
-          <div className="space-y-4">
-            {pastInsights.map((insight, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-[#333333]/[0.03] rounded-2xl p-6 space-y-3 text-left hover:bg-[#333333]/[0.05] transition-colors"
-              >
-                <p className="text-[#333333] text-sm">
-                  {insight.observation}
-                </p>
-                <p className="text-[#333333]/70 text-sm">
-                  {insight.context}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {insight.relatedThemes.map((theme) => (
-                    <span
-                      key={theme}
-                      className="px-2 py-0.5 bg-[#333333]/[0.03] rounded-full text-xs text-[#333333]/70"
-                    >
-                      {theme}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-xs text-[#333333]/40">
-                  {insight.timestamp.toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric'
-                  }).toLowerCase()}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+          <div className="h-px flex-1 bg-[#333333]/10"></div>
+        </div>
+
+        {/* Past Insights */}
+        <div className="space-y-4">
+          {pastInsights.map((insight, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="border border-[#333333]/10 bg-[#333333]/[0.02] rounded-2xl p-6 space-y-3 text-left hover:bg-[#333333]/[0.03] transition-colors"
+            >
+              <p className="text-[#333333] text-sm">
+                {insight.observation}
+              </p>
+              <p className="text-[#333333]/70 text-sm">
+                {insight.context}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {insight.relatedThemes.map((theme) => (
+                  <span
+                    key={theme}
+                    className="px-2 py-0.5 bg-[#333333]/[0.02] rounded-full text-xs text-[#333333]/70 hover:bg-[#333333]/[0.03] transition-colors"
+                  >
+                    {theme}
+                  </span>
+                ))}
+              </div>
+              <p className="text-xs text-[#333333]/40">
+                {insight.timestamp.toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric'
+                }).toLowerCase()}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </main>
   );
