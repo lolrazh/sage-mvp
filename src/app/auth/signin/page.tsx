@@ -76,7 +76,7 @@ export default function SignInPage() {
                   <span className="w-full border-t border-foreground/10" />
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className="bg-foreground/[0.02] backdrop-blur-sm px-2 text-muted-foreground">
+                  <span className="relative bg-foreground/[0.02] px-2 text-muted-foreground">
                     or continue with
                   </span>
                 </div>
