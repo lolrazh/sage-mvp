@@ -6,17 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Noise } from "@/components/ui/noise";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Chrome } from "lucide-react";
 
-// TODO: Implement actual sign-in logic (e.g., using Supabase auth helpers)
-
-export default function SignInPage() {
+export default function ForgotPasswordPage() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement sign-in logic
-    router.push('/');
+    // TODO: Implement password reset logic
+    // Show success message and redirect to sign-in
+    router.push('/auth/signin');
   };
 
   return (
@@ -41,29 +39,11 @@ export default function SignInPage() {
             {/* Header */}
             <div className="text-center space-y-2">
               <h1 className="text-2xl font-semibold tracking-tight">
-                welcome back
+                reset your password
               </h1>
               <p className="text-sm text-muted-foreground">
-                sign in to continue to sage
+                we'll send you instructions via email
               </p>
-            </div>
-
-            {/* Google Sign In */}
-            <div>
-              <Button variant="outline" className="w-full" onClick={() => {}}>
-                <Chrome className="mr-2 h-4 w-4" />
-                sign in with google
-              </Button>
-              <div className="relative my-4">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-foreground/10" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">
-                    or continue with
-                  </span>
-                </div>
-              </div>
             </div>
 
             {/* Email Form */}
@@ -78,35 +58,19 @@ export default function SignInPage() {
                   autoCorrect="off"
                   className="bg-transparent border border-foreground/30 rounded-full px-6 h-12 text-base focus-visible:ring-1 focus-visible:ring-foreground/50 placeholder:text-foreground/50"
                 />
-                <Input
-                  id="password"
-                  placeholder="password"
-                  type="password"
-                  autoCapitalize="none"
-                  autoComplete="current-password"
-                  className="bg-transparent border border-foreground/30 rounded-full px-6 h-12 text-base focus-visible:ring-1 focus-visible:ring-foreground/50 placeholder:text-foreground/50"
-                />
               </div>
-              <div className="relative">
-                <Button type="submit" className="w-full">
-                  sign in
-                </Button>
-                <Link 
-                  href="/auth/forgot-password" 
-                  className="absolute right-0 -bottom-6 text-xs text-muted-foreground transition-opacity hover:opacity-70"
-                >
-                  forgot password?
-                </Link>
-              </div>
+              <Button type="submit" className="w-full">
+                send reset link
+              </Button>
             </form>
 
-            {/* Sign Up Link */}
-            <div className="pt-8 text-center">
+            {/* Back to sign in */}
+            <div className="pt-4 text-center">
               <Link 
-                href="/auth/signup" 
+                href="/auth/signin" 
                 className="text-sm text-muted-foreground transition-opacity hover:opacity-70"
               >
-                don't have an account?
+                back to sign in
               </Link>
             </div>
           </div>
