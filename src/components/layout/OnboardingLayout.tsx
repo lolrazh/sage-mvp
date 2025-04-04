@@ -22,7 +22,13 @@ export function OnboardingLayout({
       {/* Fixed progress bar */}
       <div className="fixed top-24 left-0 right-0 px-6">
         <div className="max-w-md mx-auto">
-          <Progress value={(step / TOTAL_STEPS) * 100} className="h-1 bg-[#333333]/10" />
+          <div className="flex flex-col items-center space-y-4">
+            <Progress value={(step / TOTAL_STEPS) * 100} className="h-1 bg-foreground/10" />
+            <div className="space-y-2 text-center">
+              <h1 className="text-2xl font-serif lowercase tracking-tight">{title}</h1>
+              <p className="text-sm text-foreground/80">{subtitle}</p>
+            </div>
+          </div>
         </div>
       </div>
 
