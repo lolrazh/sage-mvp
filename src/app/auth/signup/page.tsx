@@ -7,6 +7,7 @@ import { Noise } from "@/components/ui/noise";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useState, FormEvent } from "react";
+import { createBrowserClient } from '@supabase/ssr';
 
 // TODO: Implement actual sign-up logic (e.g., using Supabase auth helpers)
 
@@ -14,25 +15,51 @@ export default function SignUpPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
     
     try {
-      // TODO: Implement actual sign-up logic here
-      console.log("Signing up with:", email, password);
-      router.push("/onboarding");
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      
+      if (error) throw error;
+      router.push('/onboarding');
     } catch (error) {
-      console.error("Sign up error:", error);
+      console.error('Sign up error:', error);
+      setError(error instanceof Error ? error.message : 'Failed to sign up');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleSignUp = async () => {
     try {
-      // TODO: Implement Google sign-up logic
-      router.push("/onboarding");
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      
+      if (error) throw error;
     } catch (error) {
-      console.error("Google sign up error:", error);
+      console.error('Google sign up error:', error);
+      setError(error instanceof Error ? error.message : 'Failed to sign up with Google');
     }
   };
 
@@ -65,9 +92,21 @@ export default function SignUpPage() {
               </p>
             </div>
 
+            {error && (
+              <div className="text-sm text-red-500 text-center">
+                {error}
+              </div>
+            )}
+
             {/* Google Sign Up */}
             <div>
-              <Button variant="outline" className="w-full" onClick={handleGoogleSignUp} type="button">
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                onClick={handleGoogleSignUp} 
+                type="button"
+                disabled={loading}
+              >
                 <svg className="mr-2 h-4 w-4" aria-hidden="true" viewBox="0 0 24 24">
                   <path
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -113,6 +152,7 @@ export default function SignUpPage() {
                   autoComplete="email"
                   autoCorrect="off"
                   required
+                  disabled={loading}
                   className="bg-transparent border border-foreground/30 rounded-full px-6 h-12 text-base focus-visible:ring-1 focus-visible:ring-foreground/50 placeholder:text-foreground/50"
                 />
                 <Input
@@ -124,11 +164,12 @@ export default function SignUpPage() {
                   autoCapitalize="none"
                   autoComplete="new-password"
                   required
+                  disabled={loading}
                   className="bg-transparent border border-foreground/30 rounded-full px-6 h-12 text-base focus-visible:ring-1 focus-visible:ring-foreground/50 placeholder:text-foreground/50"
                 />
               </div>
-              <Button type="submit" className="w-full">
-                sign up
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'signing up...' : 'sign up'}
               </Button>
             </form>
 

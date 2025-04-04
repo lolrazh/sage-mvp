@@ -110,7 +110,7 @@ export default function Home() {
             >
               <Link href="/insights">
                 <Sun className="w-5 h-5 opacity-70" />
-                <span>find clarity</span>
+                <span>daily reflections</span>
               </Link>
             </Button>
           </motion.div>
