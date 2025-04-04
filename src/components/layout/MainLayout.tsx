@@ -30,7 +30,7 @@ export function MainLayout({ children }: MainLayoutProps) {
           <Button
             size="icon"
             variant="ghost"
-            className="w-9 h-9 rounded-full"
+            className="w-9 h-9 rounded-full text-foreground/70 hover:text-foreground transition-colors"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
             {theme === "dark" ? (
@@ -42,21 +42,21 @@ export function MainLayout({ children }: MainLayoutProps) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
-                <Avatar className="h-9 w-9 border border-[#333333]/10 dark:border-[#F9F1E8]/10">
+                <Avatar className="h-9 w-9 border border-foreground/10">
                   <AvatarImage src="" />
-                  <AvatarFallback className="bg-[#333333]/5 dark:bg-[#F9F1E8]/5 text-sm lowercase">me</AvatarFallback>
+                  <AvatarFallback className="bg-foreground/5 text-sm lowercase">me</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 bg-[#F9F1E8] dark:bg-[#333333] border-[#333333]/10 dark:border-[#F9F1E8]/10">
-              <DropdownMenuItem className="cursor-pointer text-sm lowercase">
+            <DropdownMenuContent align="end" className="w-48 bg-background border-foreground/10">
+              <DropdownMenuItem className="cursor-pointer text-sm lowercase hover:bg-foreground/10">
                 <Link href="/profile" className="flex w-full">profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer text-sm lowercase">
+              <DropdownMenuItem className="cursor-pointer text-sm lowercase hover:bg-foreground/10">
                 <Link href="/settings" className="flex w-full">settings</Link>
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-[#333333]/10 dark:bg-[#F9F1E8]/10" />
-              <DropdownMenuItem className="cursor-pointer text-sm lowercase text-[#333333]/70 dark:text-[#F9F1E8]/70">
+              <DropdownMenuSeparator className="bg-foreground/10" />
+              <DropdownMenuItem className="cursor-pointer text-sm lowercase text-foreground/70 hover:bg-foreground/10">
                 log out
               </DropdownMenuItem>
             </DropdownMenuContent>

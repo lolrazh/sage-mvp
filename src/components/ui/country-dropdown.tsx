@@ -103,9 +103,9 @@ const CountryDropdownComponent = (
         collisionPadding={10}
         side="bottom"
         align="center"
-        className="min-w-[280px] p-0 bg-background rounded-xl border border-foreground/10"
+        className="min-w-[280px] p-0 bg-background rounded-[24px] border border-foreground/10"
       >
-        <Command className="w-full max-h-[300px]">
+        <Command className="w-full max-h-[300px] overflow-hidden rounded-[24px]">
           <CommandList ref={listRef} className="[&_[cmdk-list-sizer]]:!py-2 [&_[cmdk-list]]:!px-2 overflow-y-auto scrollbar-thin scrollbar-thumb-foreground/10 scrollbar-track-foreground/5 hover:scrollbar-thumb-foreground/20">
             <div className="sticky top-0 z-10 bg-background border-b border-foreground/10 mx-2 mb-2">
               <CommandInput 
