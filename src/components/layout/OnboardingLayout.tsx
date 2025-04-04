@@ -1,6 +1,7 @@
 "use client";
 
 import { Progress } from "@/components/ui/progress";
+import { Noise } from "@/components/ui/noise";
 
 interface OnboardingLayoutProps {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export function OnboardingLayout({
 }: OnboardingLayoutProps) {
   return (
     <main className="min-h-screen relative">
+      <Noise />
       {/* Fixed progress bar */}
       <div className="fixed top-24 left-0 right-0 px-6">
         <div className="max-w-md mx-auto">

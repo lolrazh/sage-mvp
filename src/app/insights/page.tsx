@@ -53,7 +53,7 @@ export default function InsightsPage() {
         >
           {/* Eye Icon */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background border border-foreground/10 flex items-center justify-center">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 text-foreground" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg viewBox="0 0 24 24" className="w-4 h-4 text-foreground/70" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
               <circle cx="12" cy="12" r="3" />
             </svg>
@@ -71,8 +71,8 @@ export default function InsightsPage() {
 
           {/* Core Truth */}
           <div>
-            <div className="border border-foreground/10 bg-foreground/[0.01] rounded-2xl p-4">
-              <p className="text-center leading-relaxed text-sm font-medium">
+            <div className="border border-foreground/20 bg-foreground/[0.03] rounded-2xl p-4">
+              <p className="text-center leading-relaxed text-sm font-medium text-foreground/90">
                 {todayInsight.truth}
               </p>
             </div>
@@ -90,7 +90,7 @@ export default function InsightsPage() {
             {todayInsight.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-foreground/[0.02] rounded-full text-xs text-foreground/70 hover:bg-foreground/[0.03] transition-colors"
+                className="px-3 py-1 bg-foreground/[0.05] rounded-full text-xs text-foreground/80 hover:bg-foreground/[0.08] transition-colors"
               >
                 {tag}
               </span>
@@ -137,7 +137,7 @@ export default function InsightsPage() {
                 {insight.relatedThemes.map((theme) => (
                   <span
                     key={theme}
-                    className="px-2 py-0.5 bg-foreground/[0.02] rounded-full text-xs text-foreground/70 hover:bg-foreground/[0.03] transition-colors"
+                    className="px-2 py-0.5 bg-foreground/[0.05] rounded-full text-xs text-foreground/80 hover:bg-foreground/[0.08] transition-colors"
                   >
                     {theme}
                   </span>
