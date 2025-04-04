@@ -14,35 +14,35 @@ const personalities = [
     label: "sensitive and thoughtful",
     description: "deeply feeling, introspective, empathetic",
     icon: Heart,
-    color: "bg-rose-500/10"
+    color: "bg-rose-500/20 dark:bg-rose-500/30"
   },
   {
     id: "energetic",
     label: "energetic and outgoing",
     description: "vibrant, social, enthusiastic",
     icon: Sparkles,
-    color: "bg-amber-500/10"
+    color: "bg-amber-500/20 dark:bg-amber-500/30"
   },
   {
     id: "quiet",
     label: "quiet and observant",
     description: "perceptive, mindful, contemplative",
     icon: Eye,
-    color: "bg-indigo-500/10"
+    color: "bg-indigo-500/20 dark:bg-indigo-500/30"
   },
   {
     id: "creative",
     label: "creative and passionate",
     description: "imaginative, expressive, inspired",
     icon: Palette,
-    color: "bg-violet-500/10"
+    color: "bg-violet-500/20 dark:bg-violet-500/30"
   },
   {
     id: "balanced",
     label: "balanced and practical",
     description: "grounded, rational, steady",
     icon: Scale,
-    color: "bg-emerald-500/10"
+    color: "bg-emerald-500/20 dark:bg-emerald-500/30"
   }
 ];
 

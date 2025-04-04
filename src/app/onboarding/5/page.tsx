@@ -14,28 +14,28 @@ const aspirations = [
     label: "discovering deeper meaning",
     description: "understanding your place in the bigger picture",
     icon: Search,
-    color: "bg-violet-500/10"
+    color: "bg-violet-500/20 dark:bg-violet-500/30"
   },
   {
     id: "clarity",
     label: "gaining clarity",
     description: "seeing through the noise to what truly matters",
     icon: Sparkles,
-    color: "bg-blue-500/10"
+    color: "bg-blue-500/20 dark:bg-blue-500/30"
   },
   {
     id: "patterns",
     label: "breaking old patterns",
     description: "transforming habits that no longer serve you",
     icon: Repeat,
-    color: "bg-amber-500/10"
+    color: "bg-amber-500/20 dark:bg-amber-500/30"
   },
   {
     id: "wellbeing",
     label: "improving emotional well-being",
     description: "cultivating inner peace and resilience",
     icon: Heart,
-    color: "bg-rose-500/10"
+    color: "bg-rose-500/20 dark:bg-rose-500/30"
   }
 ];
 

@@ -14,28 +14,28 @@ const environments = [
     label: "cozy evening alone",
     description: "quiet reflection, soft lighting, peaceful solitude",
     icon: Moon,
-    color: "bg-indigo-500/10"
+    color: "bg-indigo-500/20 dark:bg-indigo-500/30"
   },
   {
     id: "social",
     label: "lively gathering with friends",
     description: "shared laughter, warm connections, social energy",
     icon: Users,
-    color: "bg-orange-500/10"
+    color: "bg-orange-500/20 dark:bg-orange-500/30"
   },
   {
     id: "exploring",
     label: "exploring something new alone",
     description: "curiosity-driven, independent discovery, learning",
     icon: Compass,
-    color: "bg-cyan-500/10"
+    color: "bg-cyan-500/20 dark:bg-cyan-500/30"
   },
   {
     id: "nature",
     label: "being in nature",
     description: "natural rhythms, open spaces, grounding presence",
     icon: Trees,
-    color: "bg-green-500/10"
+    color: "bg-green-500/20 dark:bg-green-500/30"
   }
 ];
 

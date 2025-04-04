@@ -5,12 +5,12 @@ import { cn } from "@/lib/utils"
 const buttonVariants = {
   variant: {
     default:
-      "bg-foreground text-background hover:bg-foreground/90 active:bg-foreground/80",
+      "bg-foreground text-background hover:bg-foreground/90 active:bg-foreground/80 cursor-pointer",
     outline:
-      "border border-foreground/10 hover:bg-foreground/5 active:bg-foreground/10",
+      "border border-foreground/10 hover:bg-foreground/5 active:bg-foreground/10 cursor-pointer",
     ghost:
-      "text-foreground/80 hover:bg-transparent [&>span]:hover:text-foreground",
-    link: "text-foreground underline-offset-4 hover:underline",
+      "text-foreground/80 hover:bg-transparent [&>span]:hover:text-foreground cursor-pointer",
+    link: "text-foreground underline-offset-4 hover:underline cursor-pointer",
   },
   size: {
     default: "h-12 px-6",

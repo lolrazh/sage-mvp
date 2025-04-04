@@ -22,13 +22,7 @@ export function OnboardingLayout({
       {/* Fixed progress bar */}
       <div className="fixed top-24 left-0 right-0 px-6">
         <div className="max-w-md mx-auto">
-          <div className="flex flex-col items-center space-y-4">
-            <Progress value={(step / TOTAL_STEPS) * 100} className="h-1 bg-foreground/10" />
-            <div className="space-y-2 text-center">
-              <h1 className="text-2xl font-serif lowercase tracking-tight">{title}</h1>
-              <p className="text-sm text-foreground/80">{subtitle}</p>
-            </div>
-          </div>
+          <Progress value={(step / TOTAL_STEPS) * 100} className="h-1 bg-foreground/10" />
         </div>
       </div>
 
@@ -37,9 +31,9 @@ export function OnboardingLayout({
         <div className="w-full max-w-md">
           <div className="space-y-8">
             {/* Header */}
-            <div className="text-center space-y-1">
+            <div className="text-center space-y-2">
               <h1 className="text-[40px] font-serif font-medium tracking-[-0.03em] leading-tight">{title}</h1>
-              <p className="text-sm text-[#333333]/80">{subtitle}</p>
+              <p className="text-sm text-foreground/70">{subtitle}</p>
             </div>
 
             {/* Content */}

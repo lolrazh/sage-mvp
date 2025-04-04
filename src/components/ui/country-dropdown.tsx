@@ -53,9 +53,8 @@ const CountryDropdownComponent = (
   ref: React.ForwardedRef<HTMLButtonElement>
 ) => {
   const [open, setOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(
-    undefined
-  );
+  const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
+  const listRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (defaultValue) {
@@ -72,6 +71,12 @@ const CountryDropdownComponent = (
     }
   }, [defaultValue, options]);
 
+  useEffect(() => {
+    if (open && listRef.current) {
+      listRef.current.scrollTop = 0;
+    }
+  }, [open]);
+
   const handleSelect = useCallback(
     (country: Country) => {
       setSelectedCountry(country);
@@ -85,7 +90,7 @@ const CountryDropdownComponent = (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         ref={ref}
-        className="w-full max-w-[280px] mx-auto bg-transparent border border-foreground/50 rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-foreground/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase cursor-pointer"
+        className="w-full max-w-[280px] mx-auto bg-transparent border border-foreground/50 rounded-full px-4 h-12 text-base focus-visible:ring-0 placeholder:text-foreground/30 text-center flex items-center justify-between whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 lowercase cursor-pointer hover:border-foreground/70 transition-colors"
         disabled={disabled}
         {...props}
       >
@@ -101,7 +106,7 @@ const CountryDropdownComponent = (
         className="min-w-[280px] p-0 bg-background rounded-xl border border-foreground/10"
       >
         <Command className="w-full max-h-[300px]">
-          <CommandList className="[&_[cmdk-list-sizer]]:!py-2 [&_[cmdk-list]]:!px-2 overflow-y-auto">
+          <CommandList ref={listRef} className="[&_[cmdk-list-sizer]]:!py-2 [&_[cmdk-list]]:!px-2 overflow-y-auto scrollbar-thin scrollbar-thumb-foreground/10 scrollbar-track-foreground/5 hover:scrollbar-thumb-foreground/20">
             <div className="sticky top-0 z-10 bg-background border-b border-foreground/10 mx-2 mb-2">
               <CommandInput 
                 placeholder="search country..." 

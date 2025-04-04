@@ -8,16 +8,16 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const moods = [
-  { id: "calm", label: "calm", color: "bg-blue-500/10" },
-  { id: "anxious", label: "anxious", color: "bg-yellow-500/10" },
-  { id: "hopeful", label: "hopeful", color: "bg-green-500/10" },
-  { id: "tired", label: "tired", color: "bg-purple-500/10" },
-  { id: "excited", label: "excited", color: "bg-orange-500/10" },
-  { id: "sad", label: "sad", color: "bg-indigo-500/10" },
-  { id: "grateful", label: "grateful", color: "bg-pink-500/10" },
-  { id: "overwhelmed", label: "overwhelmed", color: "bg-red-500/10" },
-  { id: "content", label: "content", color: "bg-teal-500/10" },
-  { id: "frustrated", label: "frustrated", color: "bg-rose-500/10" },
+  { id: "calm", label: "calm", color: "bg-blue-500/20 dark:bg-blue-500/30" },
+  { id: "anxious", label: "anxious", color: "bg-yellow-500/20 dark:bg-yellow-500/30" },
+  { id: "hopeful", label: "hopeful", color: "bg-green-500/20 dark:bg-green-500/30" },
+  { id: "tired", label: "tired", color: "bg-purple-500/20 dark:bg-purple-500/30" },
+  { id: "excited", label: "excited", color: "bg-orange-500/20 dark:bg-orange-500/30" },
+  { id: "sad", label: "sad", color: "bg-indigo-500/20 dark:bg-indigo-500/30" },
+  { id: "grateful", label: "grateful", color: "bg-pink-500/20 dark:bg-pink-500/30" },
+  { id: "overwhelmed", label: "overwhelmed", color: "bg-red-500/20 dark:bg-red-500/30" },
+  { id: "content", label: "content", color: "bg-teal-500/20 dark:bg-teal-500/30" },
+  { id: "frustrated", label: "frustrated", color: "bg-rose-500/20 dark:bg-rose-500/30" },
 ];
 
 export default function OnboardingMood() {
