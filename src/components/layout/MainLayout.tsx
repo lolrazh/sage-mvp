@@ -9,10 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Moon, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { useAuth } from "@/lib/auth/AuthContext";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -20,25 +20,14 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  const { signOut } = useAuth();
   const showControls = pathname !== "/";
 
   return (
     <div className="relative min-h-screen">
       {showControls && (
         <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="w-9 h-9 rounded-full text-foreground/70 hover:text-foreground transition-colors"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? (
-              <Sun className="h-4 w-4" />
-            ) : (
-              <Moon className="h-4 w-4" />
-            )}
-          </Button>
+          <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
@@ -56,7 +45,10 @@ export function MainLayout({ children }: MainLayoutProps) {
                 <Link href="/settings" className="flex w-full">settings</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-foreground/10" />
-              <DropdownMenuItem className="cursor-pointer text-sm lowercase text-foreground/70 hover:bg-foreground/10">
+              <DropdownMenuItem 
+                className="cursor-pointer text-sm lowercase text-foreground/70 hover:bg-foreground/10"
+                onClick={() => signOut()}
+              >
                 log out
               </DropdownMenuItem>
             </DropdownMenuContent>
