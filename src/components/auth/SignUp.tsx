@@ -9,14 +9,11 @@ import { useTheme } from 'next-themes';
 import { Noise } from '@/components/ui/noise';
 import Link from 'next/link';
 
-type ViewType = 'sign_in' | 'forgotten_password';
-
-export function SignIn() {
+export function SignUp() {
   const router = useRouter();
   const { resolvedTheme } = useTheme();
   const [error, setError] = useState<string | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string>('');
-  const [view, setView] = useState<ViewType>('sign_in');
 
   // Ensure Supabase client is only created once
   const [supabase] = useState(() => 
@@ -31,28 +28,19 @@ export function SignIn() {
     setRedirectUrl(`${window.location.origin}/auth/callback`);
   }, []);
 
-  // Listen for sign-in and redirect
+  // Listen for sign-up (which triggers SIGNED_IN) and redirect
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
         router.refresh(); // Refresh server components
-        router.push('/home'); // Redirect to home after sign in
+        router.push('/home'); // Redirect to home after sign up
       }
     });
 
     return () => subscription.unsubscribe();
   }, [supabase, router]);
-
-  // Handle view changes triggered by Auth UI links (e.g., forgot password)
-  const handleViewChange = (newView: string) => {
-    if (newView === 'forgotten_password') {
-      setView('forgotten_password');
-    } else {
-      setView('sign_in'); // Default back to sign_in for other cases
-    }
-  };
 
   return (
     <main className="min-h-screen relative">
@@ -64,8 +52,7 @@ export function SignIn() {
               sage
             </h1>
             <p className="text-sm text-foreground/70">
-              {view === 'sign_in' && 'welcome back'}
-              {view === 'forgotten_password' && 'recover your account'}
+              begin your journey
             </p>
           </div>
           {error && (
@@ -77,7 +64,7 @@ export function SignIn() {
           {redirectUrl && (
             <Auth
               supabaseClient={supabase}
-              view={view}
+              view="sign_up" // Default view is sign_up
               appearance={{
                 theme: ThemeSupa,
                 variables: {
@@ -117,13 +104,13 @@ export function SignIn() {
                       buttonBorderRadius: '9999px',
                       inputBorderRadius: '9999px',
                     },
-                    fonts: {
+                    fonts: { // Explicitly set fonts
                       bodyFontFamily: `var(--font-sans)`,
                       buttonFontFamily: `var(--font-sans)`,
                       inputFontFamily: `var(--font-sans)`,
                       labelFontFamily: `var(--font-sans)`,
                     },
-                    fontSizes: {
+                    fontSizes: { // Consistent font sizes
                        baseBodySize: '14px',
                        baseInputSize: '14px',
                        baseLabelSize: '12px',
@@ -144,37 +131,25 @@ export function SignIn() {
               }}
               localization={{
                 variables: {
-                  sign_in: {
+                  sign_up: {
                     email_label: 'email',
                     password_label: 'password',
-                    button_label: 'sign in',
-                    loading_button_label: 'signing in...',
-                    social_provider_text: 'sign in with {{provider}}',
-                    link_text: "forgot password?",
+                    button_label: 'sign up',
+                    loading_button_label: 'signing up...',
+                    social_provider_text: 'sign up with {{provider}}',
+                    link_text: 'already have an account? sign in', // Link back to sign in
                   },
-                  forgotten_password: {
-                    email_label: 'email',
-                    button_label: 'send reset instructions',
-                    loading_button_label: 'sending reset instructions...',
-                    link_text: 'remembered your password? sign in',
-                  },
+                  // Only include sign_up variables
                 },
               }}
               providers={['google']}
               redirectTo={redirectUrl}
-              showLinks={true}
+              showLinks={true} // Show the link back to sign in
               theme={resolvedTheme === 'dark' ? 'dark' : 'default'}
               socialLayout="vertical"
             />
           )}
-          <div className="text-center">
-             <Link 
-                href="/signup"
-                className="text-sm text-foreground/70 hover:text-foreground transition-colors lowercase"
-             >
-               don't have an account? sign up
-            </Link>
-          </div>
+          {/* Explicit link to Sign In page is handled by Auth UI's link_text above */}
         </div>
       </div>
     </main>
