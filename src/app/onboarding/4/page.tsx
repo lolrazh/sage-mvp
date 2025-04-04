@@ -67,7 +67,7 @@ export default function OnboardingEnvironment() {
             className={`
               relative p-4 rounded-full text-left transition-colors ${color}
               ${stepData.environment === id 
-                ? "border border-[#333333]/50" 
+                ? "border border-foreground/50" 
                 : ""}
               hover:scale-[1.01] active:scale-[0.99]
               cursor-pointer
@@ -78,7 +78,7 @@ export default function OnboardingEnvironment() {
               <Icon className="w-4 h-4 shrink-0" />
               <div className="min-w-0">
                 <div className="text-sm truncate">{label}</div>
-                <div className="text-xs text-[#333333]/70 truncate">{description}</div>
+                <div className="text-xs text-foreground/70 truncate">{description}</div>
               </div>
             </div>
           </motion.button>

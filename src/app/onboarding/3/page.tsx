@@ -52,7 +52,7 @@ export default function OnboardingMood() {
             className={`
               relative p-4 rounded-full text-center transition-colors ${color}
               ${selectedMoods.includes(id) 
-                ? "border border-[#333333]/50" 
+                ? "border border-foreground/50" 
                 : ""}
               hover:scale-[1.01] active:scale-[0.99]
               cursor-pointer

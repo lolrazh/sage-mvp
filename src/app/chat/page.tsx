@@ -51,11 +51,11 @@ export default function ChatPage() {
       <Noise />
       {/* Header with Back Button and Icon */}
       <div className="fixed top-0 left-0 right-0 p-6 flex items-center">
-        <Link href="/home" className="inline-flex items-center text-[#333333]/70 hover:text-[#333333]">
+        <Link href="/home" className="inline-flex items-center text-foreground/70 hover:text-foreground">
           <ChevronLeft className="w-5 h-5" />
         </Link>
-        <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#F9F1E8] border border-[#333333]/10 flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#333333]" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-background border border-foreground/10 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" className="w-4 h-4 text-foreground" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M12 3c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4 0 .5-.2 1-.6 1.4-.4.4-.9.6-1.4.6s-1-.2-1.4-.6c-.4-.4-.6-.9-.6-1.4 0-.5.2-1 .6-1.4.4-.4.9-.6 1.4-.6zM12 17c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4 0 .5-.2 1-.6 1.4-.4.4-.9.6-1.4.6s-1-.2-1.4-.6c-.4-.4-.6-.9-.6-1.4 0-.5.2-1 .6-1.4.4-.4.9-.6 1.4-.6zM12 10c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4 0 .5-.2 1-.6 1.4-.4.4-.9.6-1.4.6s-1-.2-1.4-.6c-.4-.4-.6-.9-.6-1.4 0-.5.2-1 .6-1.4.4-.4.9-.6 1.4-.6z" />
           </svg>
         </div>
