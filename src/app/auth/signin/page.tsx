@@ -6,17 +6,34 @@ import { Input } from "@/components/ui/input";
 import { Noise } from "@/components/ui/noise";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Chrome } from "lucide-react";
+import { useState, FormEvent } from "react";
 
 // TODO: Implement actual sign-in logic (e.g., using Supabase auth helpers)
 
 export default function SignInPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Implement sign-in logic
-    router.push('/');
+    
+    try {
+      // TODO: Implement actual sign-in logic here
+      console.log("Signing in with:", email, password);
+      router.push("/");
+    } catch (error) {
+      console.error("Sign in error:", error);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      // TODO: Implement Google sign-in logic
+      router.push("/");
+    } catch (error) {
+      console.error("Google sign in error:", error);
+    }
   };
 
   return (
@@ -50,7 +67,7 @@ export default function SignInPage() {
 
             {/* Google Sign In */}
             <div>
-              <Button variant="outline" className="w-full" onClick={() => {}}>
+              <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} type="button">
                 <svg className="mr-2 h-4 w-4" aria-hidden="true" viewBox="0 0 24 24">
                   <path
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -90,17 +107,23 @@ export default function SignInPage() {
                   id="email"
                   placeholder="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoCapitalize="none"
                   autoComplete="email"
                   autoCorrect="off"
+                  required
                   className="bg-transparent border border-foreground/30 rounded-full px-6 h-12 text-base focus-visible:ring-1 focus-visible:ring-foreground/50 placeholder:text-foreground/50"
                 />
                 <Input
                   id="password"
                   placeholder="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoCapitalize="none"
                   autoComplete="current-password"
+                  required
                   className="bg-transparent border border-foreground/30 rounded-full px-6 h-12 text-base focus-visible:ring-1 focus-visible:ring-foreground/50 placeholder:text-foreground/50"
                 />
               </div>
