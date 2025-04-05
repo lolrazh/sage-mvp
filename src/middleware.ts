@@ -1,8 +1,9 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: request.headers,
     },
@@ -40,9 +41,8 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/auth')) {
     if (session) {
       // If user is signed in and trying to access auth pages, redirect to home
-      return NextResponse.redirect(new URL('/', request.url));
+      return NextResponse.redirect(new URL('/home', request.url));
     }
-    // Allow access to auth pages for non-authenticated users
     return response;
   }
 
