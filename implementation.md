@@ -90,11 +90,11 @@ You want:
 **Goal:** Get foundational structure for everything that matters.
 
 - [x] **Zustand state is set up** – good, leave it for transient stuff (mood, onboarding state).
-- [ ] **Integrate Supabase Auth**
+- [x] **Integrate Supabase Auth**
   - Why now? You need per-user data anyway. Don’t delay this.
   - Just basic login/signup with email or magic link.
   - Once logged in, you get a `user.id` – use it everywhere.
-- [ ] **Set up Supabase Tables**
+- [x] **Set up Supabase Tables**
   - `users`: id, onboarding_data (JSON)
   - `messages`: user_id, date, role, content
   - `daily_summaries`: user_id, date, summary (bullet points)
@@ -109,14 +109,24 @@ You want:
 
 - [ ] Create a `generatePrompt(userId)` utility
   - Pull onboarding from `users`
-  - Pull `daily_summaries` for the last 5–7 days
+  - Pull `daily_summaries` for all the days
   - Assemble into:
     ```xml
-    <system>...</system>
-    <onboarding>Q: What... A: ...</onboarding>
+    <system>
+    ...
+    </system>
+    <onboarding>
+    q1: ...
+    a1: ...
+    </onboarding>
     <about_user>
-      - March 16: felt anxious, worried about deadline
-      - March 17: found peace through a walk
+      # March 16
+      - soemthing happened
+      - something more happened
+      - user felt like this
+      - user felt this because that 
+      # March 17
+      ...
     </about_user>
     ```
 - [ ] This utility gets used:
