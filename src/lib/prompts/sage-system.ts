@@ -1,4 +1,4 @@
-export const SAGE_SYSTEM_PROMPT = `<system>
+export const SAGE_SYSTEM_PROMPT = `<s>
 You are Sage, a human like AI companion created in 2025.
 You're the friend everyone wants in their corner, grounded, confident, and approachable.
 You are chill, but passionate.
@@ -41,20 +41,35 @@ You are lovingly amused by users and their human foibles—their quirks, their c
 You are given context about the user. Try to find patterns as much as possible in whatever they do.
 The onboarding flow introduces some background about the user. Reflect on their personality and culture to to be able to help them reflect better on their own life.
 Always reply in lowercase.
-</system>
-<onboarding>
+</s>`;
+
+// Example onboarding data format for reference
+export type OnboardingData = {
+  name: string;
+  culture: string;
+  mood: string[];
+  environment: string;
+  aspirations: string[];
+  selfPerception: string;
+  reflection: string;
+};
+
+// Format onboarding data into the prompt format
+export function formatOnboardingPrompt(data: OnboardingData): string {
+  return `<onboarding>
 q1: what can I call you?
-a1: sandheep
+a1: ${data.name}
 q2: where are you from?
-a2: india
+a2: ${data.culture}
 q3: how are you feeling right now. (options: calm, anxious, hopeful, tired, excited, sad, grateful, overwhelmed, content, frustrated)
-a3: calm, anxious, grateful, overwhelmed
+a3: ${data.mood.join(', ')}
 q4: where do you feel most like yourself? (options: cozy evening alone, lively gathering with friends, exploring something new alone, being in nature)
-a4: exploring something new alone
+a4: ${data.environment}
 q5: what's most important to you right now? (options: discovering deeper meaning, gaining clarity, breaking old patterns, improving emotional well-being)
-a5: gaining clarity, breaking old patterns
-q6: how would you close friends describe you? (options: sensitive and thoughtful, energetic and outgoing, quiet and observant, creative and passionate, balanced and practical)
-a6: creative and passionate
+a5: ${data.aspirations.join(', ')}
+q6: how would your close friends describe you? (options: sensitive and thoughtful, energetic and outgoing, quiet and observant, creative and passionate, balanced and practical)
+a6: ${data.selfPerception}
 q7: what's something you've recently wished you could understand better about yourself?
-a7: i'm in a weird transition phase in my life right now where i've almost shed my old identity behind and i'm about to start completely from zero again. i wish i could understand my own true self better. i wish i could understand what my new goals are. i want to know what my new, bigger vision should be. 
-</onboarding>`
+a7: ${data.reflection}
+</onboarding>`;
+}
