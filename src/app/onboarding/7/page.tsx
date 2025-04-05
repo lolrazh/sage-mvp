@@ -34,18 +34,61 @@ export default function OnboardingReflection() {
 
       // Get current user
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError) throw sessionError;
+      if (sessionError) {
+        console.error('Session error:', sessionError);
+        throw sessionError;
+      }
       if (!session?.user) throw new Error('No user session found');
 
+      // Log the complete step data
+      console.log('Saving onboarding data:', {
+        id: session.user.id,
+        name: stepData.name,
+        culture: stepData.culture,
+        mood: stepData.mood,
+        environment: stepData.environment,
+        aspirations: stepData.aspirations,
+        selfPerception: stepData.selfPerception,
+        reflection: reflection // Use the latest reflection value
+      });
+
       // Save onboarding data to Supabase
-      const { error: saveError } = await supabase
+      const { data: saveData, error: saveError } = await supabase
         .from('users')
         .upsert({
           id: session.user.id,
-          onboarding_data: stepData
+          onboarding_data: {
+            name: stepData.name,
+            culture: stepData.culture,
+            mood: stepData.mood,
+            environment: stepData.environment,
+            aspirations: stepData.aspirations,
+            selfPerception: stepData.selfPerception,
+            reflection: reflection // Use the latest reflection value
+          }
+        }, {
+          onConflict: 'id'
         });
 
-      if (saveError) throw saveError;
+      if (saveError) {
+        console.error('Save error:', saveError);
+        throw saveError;
+      }
+
+      console.log('Successfully saved onboarding data:', saveData);
+
+      // Verify the data was saved
+      const { data: verifyData, error: verifyError } = await supabase
+        .from('users')
+        .select('onboarding_data')
+        .eq('id', session.user.id)
+        .single();
+
+      if (verifyError) {
+        console.error('Verify error:', verifyError);
+      } else {
+        console.log('Verified saved data:', verifyData);
+      }
 
       // Mark user as onboarded in local store
       setOnboarded(true);

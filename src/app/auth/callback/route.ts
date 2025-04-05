@@ -14,21 +14,33 @@ export async function GET(request: Request) {
       {
         cookies: {
           get(name) {
-            const cookie = cookieStore.get(name)
-            return cookie?.value
+            return cookieStore.get(name)?.value ?? ''
           },
           set(name, value, options) {
-            cookieStore.set(name, value, { ...options, path: '/' })
+            try {
+              cookieStore.set(name, value, { ...options, path: '/' })
+            } catch (error) {
+              // Handle cookie error
+            }
           },
-          remove(name, options) {
-            cookieStore.set(name, '', { ...options, path: '/', expires: new Date(0) })
-          },
-        },
+          remove(name) {
+            try {
+              cookieStore.delete(name)
+            } catch (error) {
+              // Handle cookie error
+            }
+          }
+        }
       }
     );
     
-    // Exchange the code for a session
-    await supabase.auth.exchangeCodeForSession(code);
+    try {
+      // Exchange the code for a session
+      await supabase.auth.exchangeCodeForSession(code);
+    } catch (error) {
+      console.error('Error exchanging code for session:', error);
+      return NextResponse.redirect(new URL('/auth/signin?error=auth', requestUrl.origin));
+    }
   }
 
   // URL to redirect to after sign in process completes

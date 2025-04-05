@@ -208,6 +208,14 @@ CREATE POLICY "Allow individual user update access" ON "public"."users" FOR UPDA
 
 
 
+CREATE POLICY "Allow individual user insert access" ON "public"."users" FOR INSERT TO "authenticated" WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "id"));
+
+
+
+CREATE POLICY "Allow individual user update access" ON "public"."users" FOR UPDATE TO "authenticated" USING ((( SELECT "auth"."uid"() AS "uid") = "id")) WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "id"));
+
+
+
 ALTER TABLE "public"."daily_summaries" ENABLE ROW LEVEL SECURITY;
 
 
