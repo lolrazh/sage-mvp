@@ -107,7 +107,7 @@ You want:
 ### **Phase 2 – Prompt Variable Engine (Day 2-3)**
 **Goal:** Dynamic, composable prompt generation using XML-like sections.
 
-- [ ] Create a `generatePrompt(userId)` utility
+- [x] Create a `generatePrompt(userId)` utility
   - Pull onboarding from `users`
   - Pull `daily_summaries` for all the days
   - Assemble into:
@@ -129,7 +129,7 @@ You want:
       ...
     </about_user>
     ```
-- [ ] This utility gets used:
+- [x] This utility gets used:
   - On **new chat start** (to fill the context)
   - On **daily insight gen**
 
