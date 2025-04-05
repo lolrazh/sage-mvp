@@ -38,7 +38,7 @@ export async function generateUserContextPrompt(
     // Fetch user's onboarding data
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('onboarding_data')
+      .select('user_onboarding_data')
       .eq('id', userId)
       .single();
 
@@ -47,7 +47,7 @@ export async function generateUserContextPrompt(
       throw userError;
     }
 
-    const onboardingData = userData?.onboarding_data as OnboardingData;
+    const onboardingData = userData?.user_onboarding_data as OnboardingData;
     if (!onboardingData) {
       throw new Error('No onboarding data found for user');
     }

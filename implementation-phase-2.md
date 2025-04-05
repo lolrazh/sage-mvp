@@ -11,7 +11,7 @@ To create a dynamic, server-side utility that constructs a contextual prompt for
 **2. Scope:**
 *   Develop a TypeScript function `generateUserContextPrompt(userId: string): Promise<string>`.
 *   This function will fetch data specifically for the given `userId` from Supabase:
-    *   `onboarding_data` from the `users` table.
+    *   `user_onboarding_data` from the `users` table.
     *   The 5-7 most recent `daily_summaries` from the `daily_summaries` table.
 *   It will assemble the fetched data, along with the predefined system persona, into a single string formatted with XML-like tags (`<system>`, `<onboarding>`, `<about_user>`).
 *   Basic error handling for data fetching will be included.
@@ -61,7 +61,7 @@ To create a dynamic, server-side utility that constructs a contextual prompt for
         ```typescript
         const { data: userData, error: userError } = await supabase
           .from('users')
-          .select('onboarding_data')
+          .select('user_onboarding_data')
           .eq('id', userId)
           .single(); 
         
@@ -69,7 +69,7 @@ To create a dynamic, server-side utility that constructs a contextual prompt for
           console.error(`Error fetching onboarding data for user ${userId}:`, userError);
           // Handle error - maybe return a default prompt or throw
         }
-        const onboardingData = userData?.onboarding_data as OnboardingData | null;
+        const onboardingData = userData?.user_onboarding_data as OnboardingData | null;
         ```
     *   **Fetch Daily Summaries:**
         ```typescript
@@ -125,7 +125,7 @@ To create a dynamic, server-side utility that constructs a contextual prompt for
 
         return `${systemSection}\n${onboardingSection}\n${aboutUserSection}`;
         ```
-*   **Error Handling:** For MVP, log errors to the console. If essential data (like `onboarding_data`) is missing, consider returning a simplified prompt containing only the `<system>` section or throwing an error to be handled by the caller. If summaries are missing, just omit the `<about_user>` section or include the "No recent history" message.
+*   **Error Handling:** For MVP, log errors to the console. If essential data (like `user_onboarding_data`) is missing, consider returning a simplified prompt containing only the `<system>` section or throwing an error to be handled by the caller. If summaries are missing, just omit the `<about_user>` section or include the "No recent history" message.
 
 **4. Implementation Steps:**
 

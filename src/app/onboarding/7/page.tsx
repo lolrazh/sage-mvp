@@ -36,13 +36,11 @@ export default function OnboardingReflection() {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       if (sessionError) {
         console.error('Session error:', sessionError);
-        throw sessionError;
+        throw new Error(sessionError.message);
       }
       if (!session?.user) throw new Error('No user session found');
 
-      // Log the complete step data
-      console.log('Saving onboarding data:', {
-        id: session.user.id,
+      const onboardingData = {
         name: stepData.name,
         culture: stepData.culture,
         mood: stepData.mood,
@@ -50,42 +48,37 @@ export default function OnboardingReflection() {
         aspirations: stepData.aspirations,
         selfPerception: stepData.selfPerception,
         reflection: reflection // Use the latest reflection value
+      };
+
+      // Log the complete step data
+      console.log('Saving onboarding data:', {
+        id: session.user.id,
+        ...onboardingData
       });
 
       // Save onboarding data to Supabase
-      const { data: saveData, error: saveError } = await supabase
+      const { error: saveError } = await supabase
         .from('users')
         .upsert({
           id: session.user.id,
-          onboarding_data: {
-            name: stepData.name,
-            culture: stepData.culture,
-            mood: stepData.mood,
-            environment: stepData.environment,
-            aspirations: stepData.aspirations,
-            selfPerception: stepData.selfPerception,
-            reflection: reflection // Use the latest reflection value
-          }
-        }, {
-          onConflict: 'id'
+          user_onboarding_data: onboardingData
         });
 
       if (saveError) {
         console.error('Save error:', saveError);
-        throw saveError;
+        throw new Error(saveError.message);
       }
-
-      console.log('Successfully saved onboarding data:', saveData);
 
       // Verify the data was saved
       const { data: verifyData, error: verifyError } = await supabase
         .from('users')
-        .select('onboarding_data')
+        .select('user_onboarding_data')
         .eq('id', session.user.id)
         .single();
 
       if (verifyError) {
         console.error('Verify error:', verifyError);
+        // Don't throw here, just log the error since verification is optional
       } else {
         console.log('Verified saved data:', verifyData);
       }

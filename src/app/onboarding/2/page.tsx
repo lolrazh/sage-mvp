@@ -12,7 +12,7 @@ export default function OnboardingCulture() {
   const { stepData, setStepData, completeStep } = useOnboardingStore();
 
   const handleSelect = (country: Country) => {
-    setStepData("culture", country.alpha3);
+    setStepData("culture", country.name);
   };
 
   const handleNext = () => {

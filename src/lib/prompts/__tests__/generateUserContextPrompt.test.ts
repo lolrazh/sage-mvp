@@ -57,7 +57,7 @@ describe('generateUserContextPrompt', () => {
 
     // Mock users table response
     mockSingle.mockImplementation(() => Promise.resolve({
-      data: { onboarding_data: mockOnboardingData },
+      data: { user_onboarding_data: mockOnboardingData },
       error: null
     }));
 
@@ -144,7 +144,7 @@ describe('generateUserContextPrompt', () => {
 
     // Mock users table response
     mockSingle.mockImplementation(() => Promise.resolve({
-      data: { onboarding_data: mockOnboardingData },
+      data: { user_onboarding_data: mockOnboardingData },
       error: null
     }));
 

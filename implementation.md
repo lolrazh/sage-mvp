@@ -95,7 +95,7 @@ You want:
   - Just basic login/signup with email or magic link.
   - Once logged in, you get a `user.id` – use it everywhere.
 - [x] **Set up Supabase Tables**
-  - `users`: id, onboarding_data (JSON)
+  - `users`: id, user_onboarding_data (JSON)
   - `messages`: user_id, date, role, content
   - `daily_summaries`: user_id, date, summary (bullet points)
   - `insights`: user_id, date, insight_json (strict format)

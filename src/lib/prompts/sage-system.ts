@@ -56,12 +56,12 @@ export type OnboardingData = {
 
 // Format onboarding data into the prompt format
 export function formatOnboardingPrompt(data: OnboardingData): string {
-  return `<onboarding>
+  return `<user_onboarding_data>
 q1: what can I call you?
 a1: ${data.name}
 q2: where are you from?
 a2: ${data.culture}
-q3: how are you feeling right now. (options: calm, anxious, hopeful, tired, excited, sad, grateful, overwhelmed, content, frustrated)
+q3: how are you feeling right now? (options: calm, anxious, hopeful, tired, excited, sad, grateful, overwhelmed, content, frustrated)
 a3: ${data.mood.join(', ')}
 q4: where do you feel most like yourself? (options: cozy evening alone, lively gathering with friends, exploring something new alone, being in nature)
 a4: ${data.environment}
@@ -71,5 +71,5 @@ q6: how would your close friends describe you? (options: sensitive and thoughtfu
 a6: ${data.selfPerception}
 q7: what's something you've recently wished you could understand better about yourself?
 a7: ${data.reflection}
-</onboarding>`;
+</user_onboarding_data>`;
 }
