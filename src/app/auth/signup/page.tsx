@@ -17,6 +17,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isVerificationSent, setIsVerificationSent] = useState(false);
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -38,7 +39,7 @@ export default function SignUpPage() {
       });
       
       if (error) throw error;
-      router.push('/onboarding');
+      setIsVerificationSent(true);
     } catch (error) {
       console.error('Sign up error:', error);
       setError(error instanceof Error ? error.message : 'Failed to sign up');
@@ -62,6 +63,53 @@ export default function SignUpPage() {
       setError(error instanceof Error ? error.message : 'Failed to sign up with Google');
     }
   };
+
+  if (isVerificationSent) {
+    return (
+      <main className="min-h-screen bg-background">
+        <Noise />
+        <div className="flex items-center justify-center min-h-screen p-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-md"
+          >
+            <div className="relative border border-foreground/10 bg-foreground/[0.02] rounded-[32px] p-8 space-y-8 hover:bg-foreground/[0.03] transition-all">
+              {/* Success Icon */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background border border-foreground/10 flex items-center justify-center">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 text-foreground/70" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+
+              <div className="text-center space-y-4">
+                <h1 className="text-2xl font-semibold tracking-tight">
+                  check your email
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                  we've sent a verification link to<br />
+                  <span className="font-medium text-foreground">{email}</span>
+                </p>
+                <p className="text-xs text-muted-foreground mt-4">
+                  click the link in your email to verify your account<br />
+                  and begin your journey with sage
+                </p>
+              </div>
+
+              <div className="pt-4 text-center">
+                <Link 
+                  href="/auth/signin" 
+                  className="text-sm text-muted-foreground transition-opacity hover:opacity-70"
+                >
+                  return to sign in
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-background">
