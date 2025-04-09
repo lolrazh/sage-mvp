@@ -3,6 +3,7 @@ import { ChatRequest, ChatResponse } from '@/types/chat';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { generateUserContextPrompt } from '@/lib/prompts/generateUserContextPrompt';
+import { PostgrestError } from '@supabase/supabase-js';
 
 export const runtime = 'edge';
 
@@ -53,17 +54,40 @@ export async function POST(req: Request) {
       }
     );
 
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    // Use getUser() for stronger authentication
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-    if (sessionError || !session?.user) {
+    if (authError || !user) {
       return new Response(
         JSON.stringify({ error: 'Unauthorized' } satisfies ChatResponse),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
+    // Save the user's message BEFORE generating the context or calling the AI
+    const userMessageToSave = {
+      user_id: user.id, // Use user ID from getUser()
+      role: lastMessage.role, // Should be 'user'
+      content: lastMessage.content,
+      // Supabase will automatically add created_at timestamp
+    };
+
+    const { error: insertError } = await supabase
+      .from('messages')
+      .insert(userMessageToSave);
+
+    if (insertError) {
+      console.error('Supabase insert error:', insertError);
+      // Decide if you want to stop the request or just log the error
+      // For now, let's log and continue, but in production you might want to handle this differently
+      // return new Response(
+      //   JSON.stringify({ error: 'Failed to save user message' } satisfies ChatResponse),
+      //   { status: 500, headers: { 'Content-Type': 'application/json' } }
+      // );
+    }
+
     // Generate the user's context prompt
-    const contextPrompt = await generateUserContextPrompt(session.user.id, supabase);
+    const contextPrompt = await generateUserContextPrompt(user.id, supabase); // Use user ID from getUser()
 
     // Prepare chat history with context prompt as first message
     const chatHistory = [
