@@ -28,8 +28,8 @@ export async function POST(req: NextRequest) {
             return cookieStore.get(name)?.value;
           },
           // Edge runtime doesn't need set/remove here
-          set(name: string, value: string, options: any) {},
-          remove(name: string, options: any) {},
+          set() {},
+          remove() {},
         },
       }
     );

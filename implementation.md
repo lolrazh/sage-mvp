@@ -140,10 +140,10 @@ Use Claude’s prompt variable pattern if needed. Gemini can take huge chunks, b
 ### **Phase 3 – Real Chat Logging (Day 3-4)**
 **Goal:** Chat history saves + date grouping.
 
-- [ ] Save messages to `messages` table with user_id + timestamp.
-- [ ] On frontend, group messages by day like WhatsApp: "Today", "March 17", etc.
-- [ ] Add a component that inserts "date headers" into chat visually.
-- [ ] On load, fetch past messages and hydrate from Supabase.
+- [x] Save messages to `messages` table with user_id + timestamp.
+- [x] On frontend, group messages by day like WhatsApp: "Today", "March 17", etc.
+- [x] Add a component that inserts "date headers" into chat visually.
+- [x] On load, fetch past messages and hydrate from Supabase.
 
 ---
 

@@ -26,7 +26,7 @@ interface UserState {
   reset: () => void;
 }
 
-const initialState = {
+const initialState: Pick<UserState, 'profile' | 'isOnboarded' | 'preferences'> = {
   profile: {},
   isOnboarded: false,
   preferences: {

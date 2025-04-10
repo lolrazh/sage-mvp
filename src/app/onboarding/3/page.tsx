@@ -23,7 +23,7 @@ const moods = [
 export default function OnboardingMood() {
   const router = useRouter();
   const { stepData, setStepData, completeStep } = useOnboardingStore();
-  const selectedMoods = Array.isArray(stepData.mood) ? stepData.mood : [];
+  const selectedMoods = stepData.mood;
 
   const handleSelect = (id: string) => {
     const newMoods = selectedMoods.includes(id)

@@ -9,24 +9,40 @@ export type OnboardingStep =
   | "selfPerception"
   | "reflection";
 
+// Define a specific type for the step data
+export type OnboardingStepData = {
+  name: string;
+  culture: string;
+  mood: string[];
+  environment: string;
+  aspirations: string[]; // Use string array based on initialState and usage
+  selfPerception: string;
+  reflection: string;
+};
+
 interface OnboardingState {
   currentStep: OnboardingStep;
   completedSteps: OnboardingStep[];
-  stepData: Record<OnboardingStep, any>;
+  stepData: OnboardingStepData; // Use the specific type
   setCurrentStep: (step: OnboardingStep) => void;
   completeStep: (step: OnboardingStep) => void;
-  setStepData: (step: OnboardingStep, data: any) => void;
+  // Use a more specific type for data based on possible values
+  setStepData: (step: OnboardingStep, data: string | string[]) => void; 
   canProceed: (step: OnboardingStep) => boolean;
   reset: () => void;
 }
 
-const initialState = {
-  currentStep: "name" as OnboardingStep,
+const initialState: { 
+  currentStep: OnboardingStep; 
+  completedSteps: OnboardingStep[]; 
+  stepData: OnboardingStepData 
+} = {
+  currentStep: "name",
   completedSteps: [],
   stepData: {
     name: "",
     culture: "",
-    mood: "",
+    mood: [],
     environment: "",
     aspirations: [],
     selfPerception: "",
@@ -60,7 +76,7 @@ export const useOnboardingStore = create<OnboardingState>()((set, get) => ({
       case "culture":
         return Boolean(stepData.culture);
       case "mood":
-        return Boolean(stepData.mood);
+        return stepData.mood.length > 0;
       case "environment":
         return Boolean(stepData.environment);
       case "aspirations":

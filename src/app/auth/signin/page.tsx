@@ -29,7 +29,7 @@ export default function SignInPage() {
     setLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
@@ -46,7 +46,7 @@ export default function SignInPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`
@@ -184,7 +184,7 @@ export default function SignInPage() {
                 href="/auth/signup" 
                 className="text-sm text-muted-foreground transition-opacity hover:opacity-70"
               >
-                don't have an account?
+                don&apos;t have an account?
               </Link>
             </div>
           </div>

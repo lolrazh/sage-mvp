@@ -3,7 +3,6 @@ import { ChatRequest, ChatResponse } from '@/types/chat';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { generateUserContextPrompt } from '@/lib/prompts/generateUserContextPrompt';
-import { PostgrestError } from '@supabase/supabase-js';
 
 export const runtime = 'edge';
 
@@ -44,10 +43,10 @@ export async function POST(req: Request) {
           get(name: string) {
             return cookieStore.get(name)?.value;
           },
-          set(name: string, value: string, options: any) {
+          set() {
             // No-op in edge runtime - we don't need to set cookies in this API route
           },
-          remove(name: string, options: any) {
+          remove() {
             // No-op in edge runtime - we don't need to remove cookies in this API route
           },
         },

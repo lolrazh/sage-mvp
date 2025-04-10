@@ -78,7 +78,7 @@ export default function ChatPage() {
     fetchHistory();
   }, [userId, supabase]);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages } = useChat({
+  const { messages, input, handleInputChange, isLoading, append } = useChat({
     api: '/api/chat',
     streamProtocol: 'text',
     onResponse: (response) => {
@@ -151,7 +151,7 @@ export default function ChatPage() {
 
   const handleSend = (content: string) => {
     console.log('Sending message:', content);
-    handleSubmit(new Event('submit') as any, { data: { content } });
+    append({ role: 'user', content });
   };
 
   return (

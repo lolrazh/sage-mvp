@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Noise } from "@/components/ui/noise";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useState, FormEvent } from "react";
 import { createBrowserClient } from '@supabase/ssr';
@@ -12,7 +11,6 @@ import { createBrowserClient } from '@supabase/ssr';
 // TODO: Implement actual sign-up logic (e.g., using Supabase auth helpers)
 
 export default function SignUpPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +28,7 @@ export default function SignUpPage() {
     setLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -50,7 +48,7 @@ export default function SignUpPage() {
 
   const handleGoogleSignUp = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`
@@ -87,7 +85,7 @@ export default function SignUpPage() {
                   check your email
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  we've sent a verification link to<br />
+                  we&apos;ve sent a verification link to<br />
                   <span className="font-medium text-foreground">{email}</span>
                 </p>
                 <p className="text-xs text-muted-foreground mt-4">
